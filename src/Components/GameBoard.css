@@ -4,9 +4,17 @@
   height: 90vmin;
   display: flex;
   flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 .board div {
-  width: calc(90vmin / 9);
-  height: calc(90vmin / 9);
+  margin: 5px;
+  border-radius: 40%;
+  width: calc(90vmin / 8 - 10px);
+  height: calc(90vmin / 8 - 10px);
+  box-shadow: rgba(240, 224, 0, 0.424) 0px -13px 15px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }

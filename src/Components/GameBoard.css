@@ -1,0 +1,12 @@
+.board {
+  display: flex;
+  width: 90vmin;
+  height: 90vmin;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.board div {
+  width: calc(90vmin / 9);
+  height: calc(90vmin / 9);
+}

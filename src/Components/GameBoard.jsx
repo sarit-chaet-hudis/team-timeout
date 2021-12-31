@@ -68,6 +68,27 @@ function GameBoard(props) {
         }
       }
     };
+
+    const moveIntoSquareBelow = () => {
+      const firstRow = Array.from(Array(width).keys());
+
+      for (let i = 0; i < width * (width - 1); i++) {
+        // check each row but not last one
+        if (firstRow.includes(i) && currentBlocks[i] === "black") {
+          // generate random block to fill empty block in top row
+          console.log(`in first row and found black`);
+          const randomBlockNo = Math.floor(Math.random() * blocks.length);
+          console.log(`blocks[randomBlockNo] is ${blocks[randomBlockNo]}`);
+          currentBlocks[i] = blocks[randomBlockNo];
+        }
+
+        if (currentBlocks[i + width] === "black") {
+          currentBlocks[i + width] = currentBlocks[i];
+          currentBlocks[i] = "black";
+        }
+      }
+    };
+
     const timer = setInterval(() => {
       checkColMatch(3);
       checkColMatch(4);
@@ -75,8 +96,9 @@ function GameBoard(props) {
       chechRowMatch(3);
       chechRowMatch(4);
       chechRowMatch(5);
+      moveIntoSquareBelow();
       setCurrentBlocks([...currentBlocks]);
-    }, 500);
+    }, 100);
     return () => clearInterval(timer);
   }, [currentBlocks]);
 

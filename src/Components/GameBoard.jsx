@@ -4,10 +4,10 @@ import "./GameBoard.css";
 const width = 8;
 const blocks = [
   "#FF1780",
-  "#5C9AFF",
+  "#5C8AFF",
   "#FFC922",
   "#71C757",
-  "#9757EF",
+  "#A757EF",
   "#FC7536",
 ];
 
@@ -116,8 +116,12 @@ function GameBoard(props) {
   const onDragEnd = () => {
     // check if drag is valid, if so- replace blocks
     const blockBeingDraggedId = +blockBeingDragged.getAttribute("data-id");
-
     const blockBeingReplacedId = +blockBeingReplaced.getAttribute("data-id");
+
+    console.log(`blockBeingDragged is`);
+    console.log(blockBeingDragged);
+    console.log(`blockBeingReplaced is `);
+    console.log(blockBeingReplaced);
 
     const temp = currentBlocks[blockBeingReplacedId];
     currentBlocks[blockBeingReplacedId] = currentBlocks[blockBeingDraggedId];
@@ -131,9 +135,10 @@ function GameBoard(props) {
       blockBeingDraggedId - width,
       // TODO this does not test borders!!!
     ];
+    console.log(validMoves);
 
     const isValidMove = validMoves.includes(blockBeingReplacedId);
-
+    console.log(`isValidMove is ${isValidMove}`);
     const row5 = chechRowMatch(5);
     console.log(`row of 5? ${row5}`);
     const row4 = chechRowMatch(4);
@@ -155,10 +160,10 @@ function GameBoard(props) {
       setBlockBeingDragged(null);
       setBlockBeingReplaced(null);
     } else {
-      currentBlocks[blockBeingReplacedId] =
-        blockBeingReplaced.style.backgroundColor;
-      currentBlocks[blockBeingDraggedId] =
-        blockBeingDragged.style.backgroundColor;
+      const temp = currentBlocks[blockBeingReplacedId];
+      currentBlocks[blockBeingReplacedId] = currentBlocks[blockBeingDraggedId];
+
+      currentBlocks[blockBeingDraggedId] = temp;
       setCurrentBlocks([...currentBlocks]);
     }
   };

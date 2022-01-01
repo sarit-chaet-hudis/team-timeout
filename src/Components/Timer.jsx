@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const Timer = ({ stopGame }) => {
-  const [time, setTime] = useState(10); //TODO restart on "new Game"
+  const [time, setTime] = useState(30); //TODO restart on "new Game"
 
   useEffect(() => {
     const timerInterval = setInterval(() => {

@@ -1,10 +1,15 @@
-import Game from "./Pages/Game";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CreateGame from "./Pages/CreateGame";
+import PlayGame from "./Pages/PlayGame";
 
 function App() {
   return (
-    <div className="App">
-      <Game />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/play" element={<PlayGame />} />
+        <Route path="/create" element={<CreateGame />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

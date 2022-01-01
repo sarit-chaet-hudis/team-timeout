@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./GameBoard.css";
+//import { GameBoard } from "./styles/GameBoard.styled";
 
 const width = 8;
 const blocks = [
@@ -115,14 +116,11 @@ function GameBoard(props) {
 
   const onDragEnd = () => {
     // check if drag is valid, if so- replace blocks
+
     const blockBeingDraggedId = +blockBeingDragged.getAttribute("data-id");
     const blockBeingReplacedId = +blockBeingReplaced.getAttribute("data-id");
 
-    console.log(`blockBeingDragged is`);
-    console.log(blockBeingDragged);
-    console.log(`blockBeingReplaced is `);
-    console.log(blockBeingReplaced);
-
+    // first: replace blocks
     const temp = currentBlocks[blockBeingReplacedId];
     currentBlocks[blockBeingReplacedId] = currentBlocks[blockBeingDraggedId];
 
@@ -136,9 +134,11 @@ function GameBoard(props) {
       // TODO this does not test borders!!!
     ];
     console.log(validMoves);
-
+    // then check if valid move
     const isValidMove = validMoves.includes(blockBeingReplacedId);
+
     console.log(`isValidMove is ${isValidMove}`);
+    // then check if the move ended with a match
     const row5 = chechRowMatch(5);
     console.log(`row of 5? ${row5}`);
     const row4 = chechRowMatch(4);
@@ -154,12 +154,14 @@ function GameBoard(props) {
 
     if (
       blockBeingReplacedId &&
-      isValidMove &&
+      isValidMove && //TODO isValidMove is false but match still happens
       (row3 || row4 || row5 || col3 || col4 || col5)
     ) {
+      // Move was valid and ended with a match. Leave blocks and reset drag
       setBlockBeingDragged(null);
       setBlockBeingReplaced(null);
     } else {
+      // Return blocks to their original position
       const temp = currentBlocks[blockBeingReplacedId];
       currentBlocks[blockBeingReplacedId] = currentBlocks[blockBeingDraggedId];
 

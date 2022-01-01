@@ -1,5 +1,5 @@
-const Score = (props) => {
-  return <div className="Score">SCORE</div>;
+const Score = ({ currScore }) => {
+  return <div className="Score">{currScore}</div>;
 };
 
 export default Score;

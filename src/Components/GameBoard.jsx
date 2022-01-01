@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./GameBoard.css";
-//import { GameBoard } from "./styles/GameBoard.styled";
 
 const width = 8;
 const blocks = [
@@ -12,7 +11,7 @@ const blocks = [
   "#FC7536",
 ];
 
-function GameBoard(props) {
+function GameBoard({ gotMatch }) {
   const [currentBlocks, setCurrentBlocks] = useState([]);
   const [blockBeingDragged, setBlockBeingDragged] = useState(null);
   const [blockBeingReplaced, setBlockBeingReplaced] = useState(null);
@@ -50,6 +49,7 @@ function GameBoard(props) {
       const selectedColor = currentBlocks[i];
       if (row.every((block) => currentBlocks[block] === selectedColor)) {
         row.forEach((block) => (currentBlocks[block] = "black"));
+        gotMatch(matchLength);
         return true;
       }
     }
@@ -68,6 +68,7 @@ function GameBoard(props) {
       const selectedColor = currentBlocks[i];
       if (column.every((block) => currentBlocks[block] === selectedColor)) {
         column.forEach((block) => (currentBlocks[block] = "black"));
+        gotMatch(matchLength);
         return true;
       }
     }
@@ -107,7 +108,6 @@ function GameBoard(props) {
   }, [currentBlocks, blockBeingDragged, blockBeingReplaced]); // eslint-disable-line
 
   const onDragStart = (e) => {
-    console.log(e.target);
     setBlockBeingDragged(e.target);
   };
   const onDrop = (e) => {
@@ -138,28 +138,22 @@ function GameBoard(props) {
     const isValidMove = validMoves.includes(blockBeingReplacedId);
 
     console.log(`isValidMove is ${isValidMove}`);
-    // then check if the move ended with a match
-    const row5 = chechRowMatch(5);
-    console.log(`row of 5? ${row5}`);
-    const row4 = chechRowMatch(4);
-    console.log(`row of 4? ${row4}`);
-    const row3 = chechRowMatch(3);
-    console.log(`row of 3? ${row3}`);
-    const col5 = checkColMatch(5);
-    console.log(`col of 5? ${col5}`);
-    const col4 = checkColMatch(4);
-    console.log(`col of 4? ${col4}`);
-    const col3 = checkColMatch(3);
-    console.log(`col of 3? ${col3}`);
 
-    if (
-      blockBeingReplacedId &&
-      isValidMove && //TODO isValidMove is false but match still happens
-      (row3 || row4 || row5 || col3 || col4 || col5)
-    ) {
-      // Move was valid and ended with a match. Leave blocks and reset drag
-      setBlockBeingDragged(null);
-      setBlockBeingReplaced(null);
+    if (blockBeingReplacedId && isValidMove) {
+      // then check if the move ended with a match
+
+      const row5 = chechRowMatch(5);
+      const row4 = chechRowMatch(4);
+      const row3 = chechRowMatch(3);
+      const col5 = checkColMatch(5);
+      const col4 = checkColMatch(4);
+      const col3 = checkColMatch(3);
+
+      if (row3 || row4 || row5 || col3 || col4 || col5) {
+        // Move was valid and ended with a match. Leave blocks and reset drag
+        setBlockBeingDragged(null);
+        setBlockBeingReplaced(null);
+      }
     } else {
       // Return blocks to their original position
       const temp = currentBlocks[blockBeingReplacedId];

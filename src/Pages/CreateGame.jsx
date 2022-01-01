@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Picker from "emoji-picker-react";
-import { useEffect } from "react/cjs/react.development";
 
 const CreateGame = () => {
   const [chosenEmoji, setChosenEmoji] = useState(null);
@@ -38,11 +37,27 @@ const CreateGame = () => {
         <input type="text" placeholder="Block1"></input>
         <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
         {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
+        <br />
         <input type="text" placeholder="Block2"></input>
+        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
+        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
+        <br />
         <input type="text" placeholder="Block3"></input>
+        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
+        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
+        <br />
         <input type="text" placeholder="Block4"></input>
+        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
+        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
+        <br />
         <input type="text" placeholder="Block5"></input>
+        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
+        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
+        <br />
         <input type="text" placeholder="Block6"></input>
+        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
+        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
+        <br />
       </form>
       <button>Save and get link</button>
       <Link to="/">Play</Link>

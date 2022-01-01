@@ -5,7 +5,7 @@ const CreateGame = () => {
     <div>
       <h1>Create your own Team Game!</h1>
       <button>Save and get link</button>
-      <Link to="/play">Play</Link>
+      <Link to="/">Play</Link>
     </div>
   );
 };

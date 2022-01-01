@@ -6,6 +6,7 @@ const GameControls = () => {
     <div className="GameControls">
       <Score />
       <Timer />
+      <button>New Game</button>
     </div>
   );
 };

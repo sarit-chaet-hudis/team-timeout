@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Picker from "emoji-picker-react";
 import styled from "styled-components";
 
 const CreateGame = ({ blocks, updateBlocks }) => {
-  //const [chosenEmoji, setChosenEmoji] = useState(null);
-
   const [showEmojiPicker, setShowEmojiPicker] = useState([
     false,
     false,
@@ -16,9 +14,9 @@ const CreateGame = ({ blocks, updateBlocks }) => {
   ]);
 
   const onTitleChange = (e) => {
-    blocks[e.target.id].title = e.target.value;
-    const newBlock = blocks[e.target.id];
-    const newBlockArray = [...blocks.splice(e.target.id, 1, newBlock)];
+    const i = e.target.id;
+    const newBlockArray = blocks.slice();
+    newBlockArray[i].title = e.target.value;
     updateBlocks(newBlockArray);
   };
 
@@ -28,10 +26,13 @@ const CreateGame = ({ blocks, updateBlocks }) => {
 
   const onEmojiClick = (e, emojiObj) => {
     const i = getActiveEmojiIndex();
-    const newBlock = blocks[i];
-    newBlock.emoji = emojiObj.emoji;
-    const newBlockArray = [...blocks.splice(i, 1, newBlock)];
+    const newBlockArray = blocks.slice();
+    newBlockArray[i].emoji = emojiObj.emoji;
     updateBlocks(newBlockArray);
+    closeEmojiPicker(i);
+  };
+
+  const closeEmojiPicker = (i) => {
     const newArray = showEmojiPicker.slice();
     newArray[i] = false;
     setShowEmojiPicker(newArray);
@@ -40,8 +41,37 @@ const CreateGame = ({ blocks, updateBlocks }) => {
   const showPicker = (e) => {
     e.preventDefault();
     const newArray = showEmojiPicker.slice();
-    newArray[0] = true;
+    newArray[e.target.id] = true;
     setShowEmojiPicker(newArray);
+  };
+
+  const renderSelectors = () => {
+    return blocks.map((block) => {
+      return (
+        <Selector key={block.color}>
+          <div className="gameBlock" style={{ backgroundColor: block.color }}>
+            <div className="emoji">{block.emoji}</div>
+            {block.title}
+          </div>
+          <input
+            id={block.index}
+            type="text"
+            placeholder={`Block ${+block.index + 1} Title`}
+            value={block.title}
+            onChange={(e) => onTitleChange(e)}
+            maxLength="10"
+          ></input>
+          <button id={block.index} onClick={(e) => showPicker(e)}>
+            Pick Emoji
+          </button>
+          {showEmojiPicker[block.index] ? (
+            <Picker onEmojiClick={onEmojiClick} />
+          ) : (
+            ""
+          )}
+        </Selector>
+      );
+    });
   };
 
   return (
@@ -53,27 +83,7 @@ const CreateGame = ({ blocks, updateBlocks }) => {
         Think of everyday activities, nothing special - like a coffee break,
         team meeting, daily, 1 on 1 or lunch. etc.
       </div>
-      <form>
-        <Selector>
-          <div className="gameBlock" style={{ backgroundColor: "#FF1780" }}>
-            <div className="emoji">{blocks[0].emoji}</div>
-
-            {blocks[0].title}
-          </div>
-          <input
-            id="0"
-            type="text"
-            placeholder="Block1"
-            value={blocks[0].title}
-            onChange={(e) => onTitleChange(e)}
-            maxLength="10"
-          ></input>
-          <button id="0" onClick={(e) => showPicker(e)}>
-            Pick Emoji
-          </button>
-          {showEmojiPicker[0] ? <Picker onEmojiClick={onEmojiClick} /> : ""}
-        </Selector>
-      </form>
+      <form>{renderSelectors()}</form>
       <button>Save and get link</button>
       <Link to="/">Play</Link>
     </div>

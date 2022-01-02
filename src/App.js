@@ -6,16 +6,16 @@ import "./App.css";
 
 function App() {
   const [blocks, setBlocks] = useState([
-    { index: 0, title: "", emoji: "☕" },
-    { index: 1, title: "", emoji: "☕" },
-    { index: 2, title: "", emoji: "☕" },
-    { index: 3, title: "", emoji: "☕" },
-    { index: 4, title: "", emoji: "☕" },
-    { index: 5, title: "", emoji: "☕" },
+    { index: 0, color: "#FF1780", title: "", emoji: "☕" },
+    { index: 1, color: "#5C8AFF", title: "", emoji: "☕" },
+    { index: 2, color: "#FFC922", title: "", emoji: "☕" },
+    { index: 3, color: "#71C757", title: "", emoji: "☕" },
+    { index: 4, color: "#A757EF", title: "", emoji: "☕" },
+    { index: 5, color: "#FC7536", title: "", emoji: "☕" },
   ]);
 
-  const updateBlocks = (newBlocks) => {
-    setBlocks(newBlocks);
+  const updateBlocks = (newBlocksArray) => {
+    setBlocks(newBlocksArray);
   };
 
   return (

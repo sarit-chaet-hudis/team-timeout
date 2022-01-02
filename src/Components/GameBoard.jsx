@@ -182,9 +182,9 @@ function GameBoard({ gotMatch, blocks }) {
           onDragEnd={onDragEnd}
         >
           <span className="emoji" data-id={index}>
-            {blocks[0].emoji}
+            {blocks[index].emoji}
           </span>
-          {blocks[0].title}
+          {blocks[index].title}
         </div>
       );
     }

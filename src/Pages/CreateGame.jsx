@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Picker from "emoji-picker-react";
 
 const CreateGame = () => {
@@ -60,7 +60,7 @@ const CreateGame = () => {
         <br />
       </form>
       <button>Save and get link</button>
-      <Link to="/">Play</Link>
+      <Redirect to="/">Play</Redirect>
     </div>
   );
 };

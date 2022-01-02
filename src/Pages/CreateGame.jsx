@@ -42,8 +42,8 @@ const CreateGame = ({ blocks, updateBlocks }) => {
       </div>
       <form>
         <div className="gameBlock" style={{ backgroundColor: "#FF1780" }}>
-          {blocks[0].emoji}
-          <br />
+          <div className="emoji">{blocks[0].emoji}</div>
+
           {blocks[0].title}
         </div>
         <input
@@ -52,6 +52,7 @@ const CreateGame = ({ blocks, updateBlocks }) => {
           placeholder="Block1"
           value={blocks[0].title}
           onChange={(e) => onTitleChange(e)}
+          maxLength="10"
         ></input>
         <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
         {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}

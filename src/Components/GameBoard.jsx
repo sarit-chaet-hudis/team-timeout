@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./GameBoard.css";
 
 const width = 8;
-const blocks = [
+const blockColors = [
   "#FF1780",
   "#5C8AFF",
   "#FFC922",
@@ -11,7 +11,7 @@ const blocks = [
   "#FC7536",
 ];
 
-function GameBoard({ gotMatch }) {
+function GameBoard({ gotMatch, blocks }) {
   const [currentBlocks, setCurrentBlocks] = useState([]);
   const [blockBeingDragged, setBlockBeingDragged] = useState(null);
   const [blockBeingReplaced, setBlockBeingReplaced] = useState(null);
@@ -19,7 +19,8 @@ function GameBoard({ gotMatch }) {
   const generateRandomBoard = () => {
     const randomBoard = [];
     for (let i = 0; i < width * width; i++) {
-      const randomBlock = blocks[Math.floor(Math.random() * blocks.length)];
+      const randomBlock =
+        blockColors[Math.floor(Math.random() * blockColors.length)];
       randomBoard.push(randomBlock);
     }
     setCurrentBlocks(randomBoard);
@@ -82,9 +83,9 @@ function GameBoard({ gotMatch }) {
       if (firstRow.includes(i) && currentBlocks[i] === "black") {
         // generate random block to fill empty block in top row
 
-        const randomBlockNo = Math.floor(Math.random() * blocks.length);
+        const randomBlockNo = Math.floor(Math.random() * blockColors.length);
 
-        currentBlocks[i] = blocks[randomBlockNo];
+        currentBlocks[i] = blockColors[randomBlockNo];
       }
 
       if (currentBlocks[i + width] === "black") {
@@ -179,7 +180,11 @@ function GameBoard({ gotMatch }) {
           onDragLeave={(e) => e.preventDefault()}
           onDrop={onDrop}
           onDragEnd={onDragEnd}
-        ></div>
+        >
+          <div className="emoji">{blocks[0].emoji}</div>
+
+          {blocks[0].title}
+        </div>
       ))}
     </div>
   );

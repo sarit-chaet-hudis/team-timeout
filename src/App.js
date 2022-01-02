@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CreateGame from "./Pages/CreateGame";
 import PlayGame from "./Pages/PlayGame";
+import "./App.css";
 
 function App() {
   const [blocks, setBlocks] = useState([

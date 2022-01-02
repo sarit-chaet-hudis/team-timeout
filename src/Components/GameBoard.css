@@ -24,4 +24,10 @@
   justify-content: center;
   text-align: center;
   color: white;
+  font-size: 1.7vmin;
+}
+
+.gameBlock .emoji {
+  font-size: 3vmin;
+  line-height: 3min;
 }

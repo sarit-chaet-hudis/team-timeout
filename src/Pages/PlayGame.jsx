@@ -4,7 +4,7 @@ import Timer from "../Components/Timer";
 import Score from "../Components/Score";
 import { useEffect } from "react/cjs/react.development";
 
-function PlayGame(props) {
+function PlayGame({ blocks }) {
   const [currScore, setCurrScore] = useState(0);
   const [matchStreak, setMatchStreak] = useState(0);
 
@@ -47,7 +47,7 @@ function PlayGame(props) {
 
   return (
     <div className="GamePage">
-      <GameBoard gotMatch={gotMatch} />
+      <GameBoard gotMatch={gotMatch} blocks={blocks} />
       <Score saveScore={saveScore} currScore={currScore} />
       <Timer stopGame={stopGame} />
       <button>New Game</button>

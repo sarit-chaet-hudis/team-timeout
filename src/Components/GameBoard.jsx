@@ -164,7 +164,8 @@ function GameBoard({ gotMatch, blocks }) {
   };
 
   const renderBlock = (color, index) => {
-    if (color === "white") return <div className="gameBlock empty"></div>;
+    if (color === "white")
+      return <div className="gameBlock empty" key={index}></div>;
     else {
       return (
         <div

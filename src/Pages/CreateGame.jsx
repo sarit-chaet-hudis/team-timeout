@@ -1,11 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Picker from "emoji-picker-react";
+import styled from "styled-components";
 
 const CreateGame = ({ blocks, updateBlocks }) => {
   //const [chosenEmoji, setChosenEmoji] = useState(null);
 
-  const [showEmojiPicker, toggleShowEmojiPicker] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const onTitleChange = (e) => {
     blocks[e.target.id].title = e.target.value;
@@ -15,19 +23,24 @@ const CreateGame = ({ blocks, updateBlocks }) => {
   };
 
   const onEmojiClick = (e, emojiObj) => {
-    e.preventDefault();
-    //setChosenEmoji(emojiObj);
-    toggleShowEmojiPicker(false);
+    console.log(emojiObj.emoji);
+    blocks[0].emoji = emojiObj.emoji;
+    const newBlock = blocks[e.target.id];
+    const newBlockArray = [...blocks.splice(e.target.id, 1, newBlock)];
+    updateBlocks(newBlockArray);
+    const newArray = showEmojiPicker.slice();
+    newArray[0] = false;
+    setShowEmojiPicker(newArray);
   };
-
-  useEffect(
-    () => console.log(`showEmojiPicker is ${showEmojiPicker}`),
-    [showEmojiPicker]
-  );
 
   const showPicker = (e) => {
     e.preventDefault();
-    toggleShowEmojiPicker(true);
+    console.log("e.target.id", e.target.id);
+
+    console.log("~ showEmojiPicker", showEmojiPicker);
+    const newArray = showEmojiPicker.slice();
+    newArray[0] = true;
+    setShowEmojiPicker(newArray);
   };
 
   return (
@@ -40,42 +53,25 @@ const CreateGame = ({ blocks, updateBlocks }) => {
         team meeting, daily, 1 on 1 or lunch. etc.
       </div>
       <form>
-        <div className="gameBlock" style={{ backgroundColor: "#FF1780" }}>
-          <div className="emoji">{blocks[0].emoji}</div>
+        <Selector>
+          <div className="gameBlock" style={{ backgroundColor: "#FF1780" }}>
+            <div className="emoji">{blocks[0].emoji}</div>
 
-          {blocks[0].title}
-        </div>
-        <input
-          id="0"
-          type="text"
-          placeholder="Block1"
-          value={blocks[0].title}
-          onChange={(e) => onTitleChange(e)}
-          maxLength="10"
-        ></input>
-        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
-        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
-        <br />
-        <input type="text" placeholder="Block2"></input>
-        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
-        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
-        <br />
-        {/* <input type="text" placeholder="Block3"></input>
-        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
-        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
-        <br />
-        <input type="text" placeholder="Block4"></input>
-        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
-        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
-        <br />
-        <input type="text" placeholder="Block5"></input>
-        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
-        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
-        <br />
-        <input type="text" placeholder="Block6"></input>
-        <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
-        {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
-        <br /> */}
+            {blocks[0].title}
+          </div>
+          <input
+            id="0"
+            type="text"
+            placeholder="Block1"
+            value={blocks[0].title}
+            onChange={(e) => onTitleChange(e)}
+            maxLength="10"
+          ></input>
+          <button id="0" onClick={(e) => showPicker(e)}>
+            Pick Emoji
+          </button>
+          {showEmojiPicker[0] ? <Picker onEmojiClick={onEmojiClick} /> : ""}
+        </Selector>
       </form>
       <button>Save and get link</button>
       <Link to="/">Play</Link>
@@ -84,3 +80,18 @@ const CreateGame = ({ blocks, updateBlocks }) => {
 };
 
 export default CreateGame;
+
+const Selector = styled.div`
+  display: flex;
+  align-items: center;
+  input {
+    height: fit-content;
+    border-radius: 5px;
+    margin: 0px 15px;
+  }
+
+  button {
+    border-radius: 5px;
+    margin: 0px 15px;
+  }
+`;

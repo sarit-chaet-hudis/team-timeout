@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { render } from "react-dom/cjs/react-dom.development";
 import "./GameBoard.css";
 
 const width = 8;
@@ -135,11 +134,9 @@ function GameBoard({ gotMatch, blocks }) {
       blockBeingDraggedId - width,
       // TODO this does not test borders!!!
     ];
-    console.log(validMoves);
+
     // then check if valid move
     const isValidMove = validMoves.includes(blockBeingReplacedId);
-
-    console.log(`isValidMove is ${isValidMove}`);
 
     if (blockBeingReplacedId && isValidMove) {
       // then check if the move ended with a match
@@ -183,9 +180,9 @@ function GameBoard({ gotMatch, blocks }) {
           onDrop={onDrop}
           onDragEnd={onDragEnd}
         >
-          <div className="emoji" onDragStart={(e) => e.stopPropagation()}>
+          <span className="emoji" data-id={index}>
             {blocks[0].emoji}
-          </div>
+          </span>
           {blocks[0].title}
         </div>
       );

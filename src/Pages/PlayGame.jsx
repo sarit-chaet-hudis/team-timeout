@@ -8,19 +8,19 @@ function PlayGame({ blocks }) {
   const [currScore, setCurrScore] = useState(0);
   const [matchStreak, setMatchStreak] = useState(0);
 
-  useEffect(() => {
-    if (matchStreak > 3) {
-      if (matchStreak > 8) {
-        console.log("YOU ARE ON A ROLL!!!");
-      } else {
-        console.log("Sweet!");
-      }
-    }
-  }, [matchStreak]);
+  // useEffect(() => {
+  //   if (matchStreak > 3) {
+  //     if (matchStreak > 8) {
+  //       console.log("YOU ARE ON A ROLL!!!");
+  //     } else {
+  //       console.log("Sweet!");
+  //     }
+  //   }
+  // }, [matchStreak]);
 
   const gotMatch = (matchLength) => {
     setMatchStreak((prevStreak) => prevStreak + 1);
-    console.log(matchStreak);
+    //console.log(matchStreak);
     // TODO if match was user generated, initialize streak count
     switch (matchLength) {
       case 3:

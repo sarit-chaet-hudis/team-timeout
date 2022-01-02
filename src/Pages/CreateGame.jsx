@@ -12,7 +12,6 @@ const CreateGame = ({ blocks, updateBlocks }) => {
     const newBlock = blocks[e.target.id];
     const newBlockArray = [...blocks.splice(e.target.id, 1, newBlock)];
     updateBlocks(newBlockArray);
-    console.log(blocks[e.target.id]);
   };
 
   const onEmojiClick = (e, emojiObj) => {

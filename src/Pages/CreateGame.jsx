@@ -22,22 +22,23 @@ const CreateGame = ({ blocks, updateBlocks }) => {
     updateBlocks(newBlockArray);
   };
 
+  const getActiveEmojiIndex = () => {
+    return showEmojiPicker.indexOf(true);
+  };
+
   const onEmojiClick = (e, emojiObj) => {
-    console.log(emojiObj.emoji);
-    blocks[0].emoji = emojiObj.emoji;
-    const newBlock = blocks[e.target.id];
-    const newBlockArray = [...blocks.splice(e.target.id, 1, newBlock)];
+    const i = getActiveEmojiIndex();
+    const newBlock = blocks[i];
+    newBlock.emoji = emojiObj.emoji;
+    const newBlockArray = [...blocks.splice(i, 1, newBlock)];
     updateBlocks(newBlockArray);
     const newArray = showEmojiPicker.slice();
-    newArray[0] = false;
+    newArray[i] = false;
     setShowEmojiPicker(newArray);
   };
 
   const showPicker = (e) => {
     e.preventDefault();
-    console.log("e.target.id", e.target.id);
-
-    console.log("~ showEmojiPicker", showEmojiPicker);
     const newArray = showEmojiPicker.slice();
     newArray[0] = true;
     setShowEmojiPicker(newArray);

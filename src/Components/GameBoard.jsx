@@ -168,6 +168,7 @@ function GameBoard({ gotMatch }) {
     <div className="board">
       {currentBlocks.map((color, index) => (
         <div
+          className="gameBlock"
           key={index}
           style={{ backgroundColor: color }}
           data-id={index}

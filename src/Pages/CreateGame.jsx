@@ -1,17 +1,24 @@
 import { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Picker from "emoji-picker-react";
 
-const CreateGame = () => {
-  const [chosenEmoji, setChosenEmoji] = useState(null);
+const CreateGame = ({ blocks, updateBlocks }) => {
+  //const [chosenEmoji, setChosenEmoji] = useState(null);
 
   const [showEmojiPicker, toggleShowEmojiPicker] = useState(false);
 
+  const onTitleChange = (e) => {
+    blocks[e.target.id].title = e.target.value;
+    const newBlock = blocks[e.target.id];
+    const newBlockArray = [...blocks.splice(e.target.id, 1, newBlock)];
+    updateBlocks(newBlockArray);
+    console.log(blocks[e.target.id]);
+  };
+
   const onEmojiClick = (e, emojiObj) => {
     e.preventDefault();
-    setChosenEmoji(emojiObj);
+    //setChosenEmoji(emojiObj);
     toggleShowEmojiPicker(false);
-    console.log(chosenEmoji);
   };
 
   useEffect(
@@ -30,11 +37,22 @@ const CreateGame = () => {
       <div>
         What will be your team's game blocks?
         <br />
-        Think of every activities - like a coffee break, team meeting, daily,
-        etc.
+        Think of everyday activities, nothing special - like a coffee break,
+        team meeting, daily, 1 on 1 or lunch. etc.
       </div>
       <form>
-        <input type="text" placeholder="Block1"></input>
+        <div className="gameBlock" style={{ backgroundColor: "#FF1780" }}>
+          {blocks[0].emoji}
+          <br />
+          {blocks[0].title}
+        </div>
+        <input
+          id="0"
+          type="text"
+          placeholder="Block1"
+          value={blocks[0].title}
+          onChange={(e) => onTitleChange(e)}
+        ></input>
         <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
         {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
         <br />
@@ -42,7 +60,7 @@ const CreateGame = () => {
         <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
         {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
         <br />
-        <input type="text" placeholder="Block3"></input>
+        {/* <input type="text" placeholder="Block3"></input>
         <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
         {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
         <br />
@@ -57,10 +75,10 @@ const CreateGame = () => {
         <input type="text" placeholder="Block6"></input>
         <button onClick={(e) => showPicker(e)}>Pick Emoji</button>
         {showEmojiPicker ? <Picker onEmojiClick={onEmojiClick} /> : ""}
-        <br />
+        <br /> */}
       </form>
       <button>Save and get link</button>
-      <Redirect to="/">Play</Redirect>
+      <Link to="/">Play</Link>
     </div>
   );
 };

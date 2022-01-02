@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { render } from "react-dom/cjs/react-dom.development";
 import "./GameBoard.css";
 
 const width = 8;
@@ -49,7 +50,7 @@ function GameBoard({ gotMatch, blocks }) {
       //console.log(row);
       const selectedColor = currentBlocks[i];
       if (row.every((block) => currentBlocks[block] === selectedColor)) {
-        row.forEach((block) => (currentBlocks[block] = "black"));
+        row.forEach((block) => (currentBlocks[block] = "white"));
         gotMatch(matchLength);
         return true;
       }
@@ -68,7 +69,7 @@ function GameBoard({ gotMatch, blocks }) {
       }
       const selectedColor = currentBlocks[i];
       if (column.every((block) => currentBlocks[block] === selectedColor)) {
-        column.forEach((block) => (currentBlocks[block] = "black"));
+        column.forEach((block) => (currentBlocks[block] = "white"));
         gotMatch(matchLength);
         return true;
       }
@@ -80,7 +81,7 @@ function GameBoard({ gotMatch, blocks }) {
 
     for (let i = 0; i < width * (width - 1); i++) {
       // check each row but not last one
-      if (firstRow.includes(i) && currentBlocks[i] === "black") {
+      if (firstRow.includes(i) && currentBlocks[i] === "white") {
         // generate random block to fill empty block in top row
 
         const randomBlockNo = Math.floor(Math.random() * blockColors.length);
@@ -88,9 +89,9 @@ function GameBoard({ gotMatch, blocks }) {
         currentBlocks[i] = blockColors[randomBlockNo];
       }
 
-      if (currentBlocks[i + width] === "black") {
+      if (currentBlocks[i + width] === "white") {
         currentBlocks[i + width] = currentBlocks[i];
-        currentBlocks[i] = "black";
+        currentBlocks[i] = "white";
       }
     }
   };
@@ -165,9 +166,10 @@ function GameBoard({ gotMatch, blocks }) {
     }
   };
 
-  return (
-    <div className="board">
-      {currentBlocks.map((color, index) => (
+  const renderBlock = (color, index) => {
+    if (color === "white") return <div className="gameBlock empty"></div>;
+    else {
+      return (
         <div
           className="gameBlock"
           key={index}
@@ -181,11 +183,18 @@ function GameBoard({ gotMatch, blocks }) {
           onDrop={onDrop}
           onDragEnd={onDragEnd}
         >
-          <div className="emoji">{blocks[0].emoji}</div>
-
+          <div className="emoji" onDragStart={(e) => e.stopPropagation()}>
+            {blocks[0].emoji}
+          </div>
           {blocks[0].title}
         </div>
-      ))}
+      );
+    }
+  };
+
+  return (
+    <div className="board">
+      {currentBlocks.map((color, index) => renderBlock(color, index))}
     </div>
   );
 }

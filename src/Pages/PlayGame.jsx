@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import GameBoard from "../Components/GameBoard";
 import Timer from "../Components/Timer";
 import Score from "../Components/Score";
-import { useEffect } from "react/cjs/react.development";
 
 function PlayGame({ blocks }) {
   const [currScore, setCurrScore] = useState(0);
@@ -51,6 +51,8 @@ function PlayGame({ blocks }) {
       <Score saveScore={saveScore} currScore={currScore} />
       <Timer stopGame={stopGame} />
       <button>New Game</button>
+      <Link to="/create">temp!!! to create</Link>
+      {/* TODO remove link after finish develop */}
     </div>
   );
 }

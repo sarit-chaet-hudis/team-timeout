@@ -8,6 +8,7 @@
 }
 
 .gameBlock {
+  position: relative;
   margin: 5px;
   border-radius: 40%;
   width: calc(90vmin / 8 - 10px);
@@ -30,4 +31,16 @@
 .gameBlock .emoji {
   font-size: 3vmin;
   line-height: 3min;
+}
+
+.transparent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.empty {
+  background-color: transparent;
+  box-shadow: none;
 }

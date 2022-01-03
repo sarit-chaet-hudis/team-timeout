@@ -85,7 +85,7 @@ const CreateGame = ({ blocks, updateBlocks }) => {
       </div>
       <form>{renderSelectors()}</form>
       <button>Save and get link</button>
-      <Link to="/">Play</Link>
+      <Link to="/play">Play</Link>
     </div>
   );
 };

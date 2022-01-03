@@ -2,14 +2,6 @@ import { useEffect, useState } from "react";
 import "./GameBoard.css";
 
 const width = 8;
-const blockColors = [
-  "#FF1780",
-  "#5C8AFF",
-  "#FFC922",
-  "#71C757",
-  "#A757EF",
-  "#FC7536",
-];
 
 function GameBoard({ gotMatch, blocks }) {
   const [currentBlocks, setCurrentBlocks] = useState([]);
@@ -19,14 +11,14 @@ function GameBoard({ gotMatch, blocks }) {
   const generateRandomBoard = () => {
     const randomBoard = [];
     for (let i = 0; i < width * width; i++) {
-      const randomColor = getRandomBlockColor();
-      randomBoard.push(randomColor);
+      const randomBlock = getRandomBlockType();
+      randomBoard.push(randomBlock);
     }
     setCurrentBlocks(randomBoard);
   };
 
-  const getRandomBlockColor = () => {
-    return blocks[Math.floor(Math.random() * blockColors.length)].color;
+  const getRandomBlockType = () => {
+    return Math.floor(Math.random() * 6);
   };
 
   useEffect(() => {
@@ -52,8 +44,8 @@ function GameBoard({ gotMatch, blocks }) {
 
       const selectedColor = currentBlocks[i];
       if (row.every((block) => currentBlocks[block] === selectedColor)) {
-        row.forEach((block) => (currentBlocks[block] = "white"));
-        gotMatch(matchLength);
+        row.forEach((block) => (currentBlocks[block] = 6));
+        // gotMatch(matchLength);
         return true;
       }
     }
@@ -71,7 +63,7 @@ function GameBoard({ gotMatch, blocks }) {
       }
       const selectedColor = currentBlocks[i];
       if (column.every((block) => currentBlocks[block] === selectedColor)) {
-        column.forEach((block) => (currentBlocks[block] = "white"));
+        column.forEach((block) => (currentBlocks[block] = 6));
         gotMatch(matchLength);
         return true;
       }
@@ -84,16 +76,15 @@ function GameBoard({ gotMatch, blocks }) {
     for (let i = 0; i < width * (width - 1); i++) {
       // check each row but not last one
 
-      if (firstRow.includes(i) && currentBlocks[i] === "white") {
+      if (firstRow.includes(i) && currentBlocks[i] === 6) {
         // generate random block to fill empty block in top row
-        const randomColor = getRandomBlockColor();
-        currentBlocks[i] = blockColors[randomColor];
+        currentBlocks[i] = getRandomBlockType();
       }
 
-      if (currentBlocks[i + width] === "white") {
+      if (currentBlocks[i + width] === 6) {
         // below is empty, "move" down the
         currentBlocks[i + width] = currentBlocks[i];
-        currentBlocks[i] = "white";
+        currentBlocks[i] = 6;
       }
     }
   };
@@ -167,15 +158,16 @@ function GameBoard({ gotMatch, blocks }) {
     }
   };
 
-  const renderBlock = (color, index) => {
-    if (color === "white")
+  const renderBlock = (blockType, index) => {
+    //blockType is integer between 0 -> 6
+    if (blockType === 6)
       return <div className="gameBlock empty" key={index}></div>;
     else {
       return (
         <div
           className="gameBlock"
           key={index}
-          style={{ backgroundColor: color }}
+          style={{ backgroundColor: blocks[blockType].color }}
           data-id={index}
           draggable
           onDragStart={onDragStart}
@@ -186,9 +178,9 @@ function GameBoard({ gotMatch, blocks }) {
           onDragEnd={onDragEnd}
         >
           <span className="emoji" data-id={index}>
-            {blocks[index].emoji}
+            {blocks[blockType].emoji}
           </span>
-          {blocks[index].title}
+          {blocks[blockType].title}
         </div>
       );
     }
@@ -196,7 +188,7 @@ function GameBoard({ gotMatch, blocks }) {
 
   return (
     <div className="board">
-      {currentBlocks.map((color, index) => renderBlock(color, index))}
+      {currentBlocks.map((blockType, index) => renderBlock(blockType, index))}
     </div>
   );
 }

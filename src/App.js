@@ -21,7 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PlayGame blocks={blocks} />} />
+        <Route path="/play" element={<PlayGame blocks={blocks} />} />
         <Route
           path="/create"
           element={<CreateGame blocks={blocks} updateBlocks={updateBlocks} />}

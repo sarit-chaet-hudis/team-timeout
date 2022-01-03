@@ -37,8 +37,7 @@ function PlayGame({ blocks }) {
       try {
         const parsedData = JSON.parse(data);
         console.log(parsedData);
-        // setBlocks..
-        //this.setState({ cards: parsedData });
+        // setBlocks to state
       } catch (err) {
         console.log(err);
         console.log("Invalid Data: " + data);
@@ -48,7 +47,7 @@ function PlayGame({ blocks }) {
       try {
         console.log("trying to get from api with Uid ", teamUid);
         const teamData = await axios.get(
-          "https://61d2d7dcb4c10c001712b604.mockapi.io/teams/",
+          "https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/",
           {
             params: {
               teamUid: teamUid,
@@ -57,7 +56,7 @@ function PlayGame({ blocks }) {
         );
         // save to local storage team settings @ teamUid
         // setTeamSettings(teamData) from local storage
-        console.log(teamData);
+        console.log(teamData.data[0]);
       } catch (err) {
         console.log(`sorry, can't get team data. ${err}`);
       }

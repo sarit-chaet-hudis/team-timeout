@@ -23,6 +23,7 @@ function PlayGame({ blocks }) {
   // }, [matchStreak]);
 
   useEffect(() => {
+    console.log(teamUid);
     getTeamSettings();
   }, []); // eslint-disable-line
 
@@ -45,6 +46,7 @@ function PlayGame({ blocks }) {
       }
     } else {
       try {
+        console.log("trying to get from api with Uid ", teamUid);
         const teamData = await axios.get(
           "https://61d2d7dcb4c10c001712b604.mockapi.io/teams/",
           {

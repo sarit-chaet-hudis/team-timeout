@@ -19,16 +19,19 @@ function GameBoard({ gotMatch, blocks }) {
   const generateRandomBoard = () => {
     const randomBoard = [];
     for (let i = 0; i < width * width; i++) {
-      const randomBlock =
-        blockColors[Math.floor(Math.random() * blockColors.length)];
-      randomBoard.push(randomBlock);
+      const randomColor = getRandomBlockColor();
+      randomBoard.push(randomColor);
     }
     setCurrentBlocks(randomBoard);
   };
 
+  const getRandomBlockColor = () => {
+    return blocks[Math.floor(Math.random() * blockColors.length)].color;
+  };
+
   useEffect(() => {
     generateRandomBoard();
-  }, []);
+  }, []); // eslint-disable-line
 
   const chechRowMatch = (matchLength) => {
     const invalid = [
@@ -46,7 +49,7 @@ function GameBoard({ gotMatch, blocks }) {
         // create the column we are checking, in selected length
         row.push(i + j);
       }
-      //console.log(row);
+
       const selectedColor = currentBlocks[i];
       if (row.every((block) => currentBlocks[block] === selectedColor)) {
         row.forEach((block) => (currentBlocks[block] = "white"));
@@ -80,28 +83,29 @@ function GameBoard({ gotMatch, blocks }) {
 
     for (let i = 0; i < width * (width - 1); i++) {
       // check each row but not last one
+
       if (firstRow.includes(i) && currentBlocks[i] === "white") {
         // generate random block to fill empty block in top row
-
-        const randomBlockNo = Math.floor(Math.random() * blockColors.length);
-
-        currentBlocks[i] = blockColors[randomBlockNo];
+        const randomColor = getRandomBlockColor();
+        currentBlocks[i] = blockColors[randomColor];
       }
 
       if (currentBlocks[i + width] === "white") {
+        // below is empty, "move" down the
         currentBlocks[i + width] = currentBlocks[i];
         currentBlocks[i] = "white";
       }
     }
   };
+
   useEffect(() => {
     const timer = setInterval(() => {
-      checkColMatch(3);
-      checkColMatch(4);
       checkColMatch(5);
-      chechRowMatch(3);
-      chechRowMatch(4);
+      checkColMatch(4);
+      checkColMatch(3);
       chechRowMatch(5);
+      chechRowMatch(4);
+      chechRowMatch(3);
       moveIntoSquareBelow();
       setCurrentBlocks([...currentBlocks]);
     }, 100);

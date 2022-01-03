@@ -8,7 +8,7 @@ import Score from "../Components/Score";
 function PlayGame({ blocks }) {
   const [currScore, setCurrScore] = useState(0); // eslint-disable-line
   const [matchStreak, setMatchStreak] = useState(0); // eslint-disable-line
-  const [teamSettings, setTeamSettings] = useState({});
+  const [teamSettings, setTeamSettings] = useState({}); // eslint-disable-line
   const [loading, setLoading] = useState(false);
   const { teamuid } = useParams();
 
@@ -55,7 +55,7 @@ function PlayGame({ blocks }) {
         );
         // save to local storage team settings @ teamUid
         // setTeamSettings(teamData) from local storage
-        console.log(teamSettings);
+        console.log(teamData);
       } catch (err) {
         console.log(`sorry, can't get team data. ${err}`);
       }

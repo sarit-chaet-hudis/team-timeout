@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import GameBoard from "../Components/GameBoard";
 import Timer from "../Components/Timer";
 import Score from "../Components/Score";
 
 function PlayGame({ blocks }) {
-  const [currScore, setCurrScore] = useState(0);
-  const [matchStreak, setMatchStreak] = useState(0);
+  const [currScore, setCurrScore] = useState(0); // eslint-disable-line
+  //const [matchStreak, setMatchStreak] = useState(0);
 
   // useEffect(() => {
   //   if (matchStreak > 3) {
@@ -18,24 +18,24 @@ function PlayGame({ blocks }) {
   //   }
   // }, [matchStreak]);
 
-  const gotMatch = (matchLength) => {
-    setMatchStreak((prevStreak) => prevStreak + 1);
-    //console.log(matchStreak);
-    // TODO if match was user generated, initialize streak count
-    switch (matchLength) {
-      case 3:
-        setCurrScore((currScore) => currScore + 10);
-        break;
-      case 4:
-        setCurrScore((currScore) => currScore + 40);
-        break;
-      case 5:
-        setCurrScore((currScore) => currScore + 100);
-        break;
-      default:
-        break;
-    }
-  };
+  // const gotMatch = (matchLength) => {
+  //   setMatchStreak((prevStreak) => prevStreak + 1);
+  //   //console.log(matchStreak);
+  //   // TODO if match was user generated, initialize streak count
+  //   switch (matchLength) {
+  //     case 3:
+  //       setCurrScore((currScore) => currScore + 10);
+  //       break;
+  //     case 4:
+  //       setCurrScore((currScore) => currScore + 40);
+  //       break;
+  //     case 5:
+  //       setCurrScore((currScore) => currScore + 100);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const saveScore = (scoreOnGameStop) => {
     console.log(`you got ${scoreOnGameStop} points.`);
@@ -47,7 +47,7 @@ function PlayGame({ blocks }) {
 
   return (
     <div className="GamePage">
-      <GameBoard gotMatch={gotMatch} blocks={blocks} />
+      <GameBoard blocks={blocks} />
       <Score saveScore={saveScore} currScore={currScore} />
       <Timer stopGame={stopGame} />
       <button>New Game</button>

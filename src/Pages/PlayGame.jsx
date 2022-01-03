@@ -9,7 +9,7 @@ function PlayGame({ blocks }) {
   const [currScore, setCurrScore] = useState(0); // eslint-disable-line
   const [matchStreak, setMatchStreak] = useState(0); // eslint-disable-line
   const [teamSettings, setTeamSettings] = useState({}); // eslint-disable-line
-  const [loading, setLoading] = useState(false);
+  const [finishedLoading, setFinishedLoading] = useState(false);
   const { teamUid } = useParams();
 
   // useEffect(() => {
@@ -23,26 +23,16 @@ function PlayGame({ blocks }) {
   // }, [matchStreak]);
 
   useEffect(() => {
-    console.log(teamUid);
     getTeamSettings();
   }, []); // eslint-disable-line
 
   const getTeamSettings = async () => {
     // Check for team settings on local storage, if not- get them from API
     // TODO show loader
-    setLoading(true);
 
     const data = localStorage.getItem(teamUid);
     if (data) {
-      try {
-        const parsedData = JSON.parse(data);
-        console.log(parsedData);
-        // setBlocks to state
-      } catch (err) {
-        console.log(err);
-        console.log("Invalid Data: " + data);
-        localStorage.removeItem(teamUid);
-      }
+      parseFromLocalStorageToState(data, teamUid);
     } else {
       try {
         console.log("trying to get from api with Uid ", teamUid);
@@ -54,15 +44,37 @@ function PlayGame({ blocks }) {
             },
           }
         );
+
         // save to local storage team settings @ teamUid
         // setTeamSettings(teamData) from local storage
         console.log(teamData.data[0]);
+
+        const teamSettingsFromApi = {
+          teamName: teamData.data[0].teamName,
+          blocks: teamData.data[0].blocks,
+          highscores: teamData.data[0].highscores,
+        };
+
+        localStorage.setItem(teamUid, JSON.stringify(teamSettingsFromApi));
+        setTeamSettings(teamSettingsFromApi);
       } catch (err) {
         console.log(`sorry, can't get team data. ${err}`);
       }
     }
+    if (teamSettings !== {}) {
+      setFinishedLoading(true);
+    }
+  };
 
-    setLoading(false);
+  const parseFromLocalStorageToState = (data, teamUid) => {
+    try {
+      const parsedData = JSON.parse(data);
+      setTeamSettings(parsedData);
+    } catch (err) {
+      console.log(err);
+      console.log("Invalid Data: " + data);
+      localStorage.removeItem(teamUid);
+    }
   };
 
   const gotMatch = (matchLength) => {
@@ -94,8 +106,12 @@ function PlayGame({ blocks }) {
 
   return (
     <div className="GamePage">
-      {loading ? <div>Loading...</div> : null}
-      <GameBoard blocks={blocks} gotMatch={gotMatch} />
+      {finishedLoading ? (
+        <GameBoard blocks={teamSettings.blocks} gotMatch={gotMatch} />
+      ) : (
+        <div>Loading...</div>
+      )}
+
       <Score saveScore={saveScore} currScore={currScore} />
       <Timer stopGame={stopGame} />
       <button>New Game</button>

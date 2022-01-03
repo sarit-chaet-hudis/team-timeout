@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Picker from "emoji-picker-react";
 import styled from "styled-components";
 
 const CreateGame = ({ blocks, updateBlocks }) => {
+  const [teamName, setTeamName] = useState("");
+
   const [showEmojiPicker, setShowEmojiPicker] = useState([
     false,
     false,
@@ -45,6 +48,37 @@ const CreateGame = ({ blocks, updateBlocks }) => {
     setShowEmojiPicker(newArray);
   };
 
+  const generateTeamUid = () => {
+    return (Math.random() + 1).toString(36).substring(2) + Date.now();
+  };
+
+  const saveTeamSettings = async () => {
+    const teamSettings = {
+      //  obj: {
+      //     "blocks" : [{id, color, title, emoji},{},..],
+      //     "highscores" : [{rank,name,score},{}..],
+      //     "teamName" : "team name",
+      //     "teamUid" : "lfgh94t0u35"
+      //     }
+      teamUid: generateTeamUid(),
+      teamName: teamName,
+      blocks: blocks,
+      highscores: [],
+    };
+
+    try {
+      await axios.post(
+        `https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/`,
+        teamSettings
+      );
+      console.log(
+        `Your team's game url is https://team-timeout.netlify.app/play/${teamSettings.teamUid} Share and Enjoy!`
+      );
+    } catch (err) {
+      console.log("sorry, failed to save team data.", err);
+    }
+  };
+
   const renderSelectors = () => {
     return blocks.map((block) => {
       return (
@@ -76,15 +110,25 @@ const CreateGame = ({ blocks, updateBlocks }) => {
 
   return (
     <div>
-      <h1>Create your own Team Game!</h1>
+      <h1>Team Timeout</h1>
+      <h3>Create your own Team Game, and compete against each other!</h3>
+      <label htmlFor="teamName">Enter your Team's Name:</label>
+      <input
+        type="text"
+        name="teamName"
+        value={teamName}
+        onChange={(e) => setTeamName(e.target.value)}
+      ></input>
+      <hr />
       <div>
         What will be your team's game blocks?
         <br />
-        Think of everyday activities, nothing special - like a coffee break,
-        team meeting, daily, 1 on 1 or lunch. etc.
+        Think of everyday activities, see examples below. Then choose an emoji
+        for each activity.
       </div>
       <form>{renderSelectors()}</form>
-      <button>Save and get link</button>
+      <hr />
+      <button onClick={saveTeamSettings}>Save and get link</button>
       <Link to="/play">Play</Link>
     </div>
   );
@@ -95,14 +139,4 @@ export default CreateGame;
 const Selector = styled.div`
   display: flex;
   align-items: center;
-  input {
-    height: fit-content;
-    border-radius: 5px;
-    margin: 0px 15px;
-  }
-
-  button {
-    border-radius: 5px;
-    margin: 0px 15px;
-  }
 `;

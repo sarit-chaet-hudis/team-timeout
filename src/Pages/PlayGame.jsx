@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import GameBoard from "../Components/GameBoard";
 import Timer from "../Components/Timer";
 import Score from "../Components/Score";
@@ -7,6 +8,9 @@ import Score from "../Components/Score";
 function PlayGame({ blocks }) {
   const [currScore, setCurrScore] = useState(0); // eslint-disable-line
   const [matchStreak, setMatchStreak] = useState(0); // eslint-disable-line
+  const [teamSettings, setTeamSettings] = useState({});
+  const [loading, setLoading] = useState(false);
+  const { teamuid } = useParams();
 
   // useEffect(() => {
   //   if (matchStreak > 3) {
@@ -17,6 +21,48 @@ function PlayGame({ blocks }) {
   //     }
   //   }
   // }, [matchStreak]);
+
+  useEffect(() => {
+    getTeamSettings();
+  }, []); // eslint-disable-line
+
+  const getTeamSettings = async () => {
+    // Check for team settings on local storage, if not- get them from API
+    // TODO show loader
+    setLoading(true);
+
+    const data = localStorage.getItem(teamuid);
+    if (data) {
+      try {
+        const parsedData = JSON.parse(data);
+        console.log(parsedData);
+        // setBlocks..
+        //this.setState({ cards: parsedData });
+      } catch (err) {
+        console.log(err);
+        console.log("Invalid Data: " + data);
+        localStorage.removeItem(teamuid);
+      }
+    } else {
+      try {
+        const teamData = await axios.get(
+          "https://61d2d7dcb4c10c001712b604.mockapi.io/teams/",
+          {
+            params: {
+              teamuid: teamuid,
+            },
+          }
+        );
+        // save to local storage team settings @ teamUid
+        // setTeamSettings(teamData) from local storage
+        console.log(teamSettings);
+      } catch (err) {
+        console.log(`sorry, can't get team data. ${err}`);
+      }
+    }
+
+    setLoading(false);
+  };
 
   const gotMatch = (matchLength) => {
     setMatchStreak((prevStreak) => prevStreak + 1);
@@ -47,6 +93,7 @@ function PlayGame({ blocks }) {
 
   return (
     <div className="GamePage">
+      {loading ? <div>Loading...</div> : null}
       <GameBoard blocks={blocks} gotMatch={gotMatch} />
       <Score saveScore={saveScore} currScore={currScore} />
       <Timer stopGame={stopGame} />

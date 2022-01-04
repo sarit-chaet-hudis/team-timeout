@@ -6,12 +6,15 @@ import GameBoard from "../Components/GameBoard";
 import Timer from "../Components/Timer";
 import Score from "../Components/Score";
 
+const gameDuration = 10;
+
 function PlayGame() {
-  const [currScore, setCurrScore] = useState(0); // eslint-disable-line
+  const [currScore, setCurrScore] = useState(0);
   const [matchStreak, setMatchStreak] = useState(0); // eslint-disable-line
-  const [teamSettings, setTeamSettings] = useState({}); // eslint-disable-line
+  const [teamSettings, setTeamSettings] = useState({});
+  const [time, setTime] = useState(gameDuration);
   const [finishedLoading, setFinishedLoading] = useState(false);
-  const [gameStopped, setGameStopped] = useState(false);
+
   const { teamUid } = useParams();
 
   // useEffect(() => {
@@ -79,6 +82,21 @@ function PlayGame() {
     }
   };
 
+  // Timer functionality
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      if (time > 0) {
+        setTime(time - 1);
+        if (time === 1) {
+          clearInterval(timerInterval);
+        }
+      }
+    }, 1000);
+    return () => {
+      clearInterval(timerInterval);
+    };
+  });
+
   const gotMatch = (matchLength) => {
     setMatchStreak((prevStreak) => prevStreak + 1);
     //console.log(matchStreak);
@@ -98,18 +116,8 @@ function PlayGame() {
     }
   };
 
-  const saveScore = (scoreOnGameStop) => {
-    console.log(`you got ${scoreOnGameStop} points.`);
-  };
-
-  const stopGame = () => {
-    console.log("game stopped");
-    setGameStopped(true);
-    console.log(gameStopped);
-  };
-
   const newGame = () => {
-    setGameStopped(false);
+    setTime(gameDuration);
     setCurrScore(0);
   };
 
@@ -120,6 +128,7 @@ function PlayGame() {
         <h1>Game Over</h1>
         You got {currScore} points!
         <Link to="/HighScores">See High Scores</Link>
+        <button onClick={() => newGame()}>New Game</button>
       </ShowScore>
     );
   };
@@ -131,10 +140,10 @@ function PlayGame() {
       ) : (
         <div>Loading...</div>
       )}
-      {gameStopped ? renderShowScore() : null}
+      {time === 0 ? renderShowScore() : null}
       <Controls>
-        <Score saveScore={saveScore} currScore={currScore} />
-        <Timer stopGame={stopGame} />
+        <Score currScore={currScore} />
+        <Timer time={time} />
         <button onClick={() => newGame()}>New Game</button>
       </Controls>
     </Wrapper>

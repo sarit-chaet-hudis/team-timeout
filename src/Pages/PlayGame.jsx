@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import GameBoard from "../Components/GameBoard";
 import Timer from "../Components/Timer";
@@ -17,6 +17,8 @@ function PlayGame() {
   const [playerName, setPlayerName] = useState("");
 
   const { teamUid } = useParams();
+
+  let navigate = useNavigate();
 
   // useEffect(() => {
   //   if (matchStreak > 3) {
@@ -40,35 +42,39 @@ function PlayGame() {
     if (data) {
       parseFromLocalStorageToState(data, teamUid);
     } else {
-      try {
-        console.log("trying to get from api with Uid ", teamUid);
-        const teamData = await axios.get(
-          "https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/",
-          {
-            params: {
-              teamUid: teamUid,
-            },
-          }
-        );
-
-        // save to local storage team settings @ teamUid
-        // setTeamSettings(teamData) from local storage
-        console.log(teamData.data[0]);
-
-        const teamSettingsFromApi = {
-          teamName: teamData.data[0].teamName,
-          blocks: teamData.data[0].blocks,
-          highscores: teamData.data[0].highscores,
-        };
-
-        localStorage.setItem(teamUid, JSON.stringify(teamSettingsFromApi));
-        setTeamSettings(teamSettingsFromApi);
-      } catch (err) {
-        console.log(`sorry, can't get team data. ${err}`);
-      }
+      await getTeamSettingsFromApi();
     }
     if (teamSettings !== {}) {
       setFinishedLoading(true);
+    }
+  };
+
+  const getTeamSettingsFromApi = async () => {
+    try {
+      console.log("trying to get from api with Uid ", teamUid);
+      const teamData = await axios.get(
+        "https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/",
+        {
+          params: {
+            teamUid: teamUid,
+          },
+        }
+      );
+
+      // save to local storage team settings @ teamUid
+      // setTeamSettings(teamData) from local storage
+
+      const teamSettingsFromApi = {
+        teamName: teamData.data[0].teamName,
+        blocks: teamData.data[0].blocks,
+        highscores: teamData.data[0].highscores,
+        ApiId: teamData.data[0].id,
+      };
+
+      localStorage.setItem(teamUid, JSON.stringify(teamSettingsFromApi));
+      setTeamSettings(teamSettingsFromApi);
+    } catch (err) {
+      console.log(`sorry, can't get team data. ${err}`);
     }
   };
 
@@ -120,23 +126,40 @@ function PlayGame() {
   const newGame = () => {
     setTime(gameDuration);
     setCurrScore(0);
+    // TODO shuffle blocks in GameBoard
   };
 
   const saveToHighScores = async () => {
-    const newHighscoreList = teamSettings.highscores;
+    // get current scorelist from api.
+
+    await getTeamSettingsFromApi();
+
     // TODO check if should go into top ten, and SORT
+
+    const newHighscoreList = teamSettings.highscores;
     newHighscoreList.push({ playerName: playerName, score: currScore });
+
     const newTeamSettings = Object.assign({}, teamSettings);
-    newTeamSettings.highscores = newHighscoreList;
+    console.log("~ newTeamSettings", newTeamSettings);
+
+    console.log("~ newTeamSettings.highscores", newTeamSettings.highscores);
+
     setTeamSettings(newTeamSettings);
     try {
       await axios.put(
-        `https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/${teamUid}`,
+        `https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/${teamSettings.ApiId}`,
         newTeamSettings
       );
     } catch (err) {
       console.log("sorry, failed to save highscore data.", err);
     }
+
+    console.log(
+      "~ teamSettings.highscores after api put",
+      teamSettings.highscores
+    );
+
+    // navigate("/highscores", { replace: true });
   };
 
   const renderShowScore = () => {
@@ -145,23 +168,23 @@ function PlayGame() {
       <ShowScore>
         <h1>Game Over</h1>
         You got {currScore} points!
-        {teamSettings.highscores.length > 0 ? (
+        {/* {teamSettings.highscores.length > 0 ? (
           <div>more than 10 high scores</div>
-        ) : (
-          <>
-            <div>
-              You are in the top 10, type your name to get into the highscores
-              list:
-            </div>
-            <input
-              type="text"
-              placeholder="Your name here"
-              onChange={(e) => setPlayerName(e.target.value)}
-              value={playerName}
-            ></input>
-            <button onClick={saveToHighScores}>Save Name</button>
-          </>
-        )}
+        ) : ( */}
+        <>
+          <div>
+            You are in the top 10, type your name to get into the highscores
+            list:
+          </div>
+          <input
+            type="text"
+            placeholder="Your name here"
+            onChange={(e) => setPlayerName(e.target.value)}
+            value={playerName}
+          ></input>
+          <button onClick={saveToHighScores}>Save Name</button>
+        </>
+        ){/* } */}
         <Link to="/highscores" state={{ teamSettings: teamSettings }}>
           See High Scores
         </Link>

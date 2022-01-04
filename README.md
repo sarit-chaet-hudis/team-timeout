@@ -7,4 +7,4 @@ https://docs.google.com/document/d/14sVLFwamLU-f9FkNIkpkHtwq6B-A38QDtXm2eulPtKw/
 ## Known issues
 
 - blocks can sometimes be swapped with adjacent blocks
--
+- new game button doesn't reshuffle the blocks

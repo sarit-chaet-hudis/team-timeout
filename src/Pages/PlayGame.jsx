@@ -1,15 +1,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import styled from "styled-components";
 import GameBoard from "../Components/GameBoard";
 import Timer from "../Components/Timer";
 import Score from "../Components/Score";
 
-function PlayGame({ blocks }) {
+function PlayGame() {
   const [currScore, setCurrScore] = useState(0); // eslint-disable-line
   const [matchStreak, setMatchStreak] = useState(0); // eslint-disable-line
   const [teamSettings, setTeamSettings] = useState({}); // eslint-disable-line
   const [finishedLoading, setFinishedLoading] = useState(false);
+  const [gameStopped, setGameStopped] = useState(false);
   const { teamUid } = useParams();
 
   // useEffect(() => {
@@ -80,7 +82,6 @@ function PlayGame({ blocks }) {
   const gotMatch = (matchLength) => {
     setMatchStreak((prevStreak) => prevStreak + 1);
     //console.log(matchStreak);
-    // TODO if match was user generated, initialize streak count
     switch (matchLength) {
       case 3:
         setCurrScore((currScore) => currScore + 10);
@@ -89,7 +90,8 @@ function PlayGame({ blocks }) {
         setCurrScore((currScore) => currScore + 40);
         break;
       case 5:
-        setCurrScore((currScore) => currScore + 100);
+        setCurrScore((currScore) => currScore + 200);
+
         break;
       default:
         break;
@@ -101,24 +103,75 @@ function PlayGame({ blocks }) {
   };
 
   const stopGame = () => {
-    console.log("GAME WAS STOPPED");
+    console.log("game stopped");
+    setGameStopped(true);
+    console.log(gameStopped);
+  };
+
+  const newGame = () => {
+    setGameStopped(false);
+    setCurrScore(0);
+  };
+
+  const renderShowScore = () => {
+    console.log("in renderShowScore");
+    return (
+      <ShowScore>
+        <h1>Game Over</h1>
+        You got {currScore} points!
+        <Link to="/HighScores">See High Scores</Link>
+      </ShowScore>
+    );
   };
 
   return (
-    <div className="GamePage">
+    <Wrapper>
       {finishedLoading ? (
         <GameBoard blocks={teamSettings.blocks} gotMatch={gotMatch} />
       ) : (
         <div>Loading...</div>
       )}
-
-      <Score saveScore={saveScore} currScore={currScore} />
-      <Timer stopGame={stopGame} />
-      <button>New Game</button>
-      <Link to="/create">temp!!! to create</Link>
-      {/* TODO remove link after finish develop */}
-    </div>
+      {gameStopped ? renderShowScore() : null}
+      <Controls>
+        <Score saveScore={saveScore} currScore={currScore} />
+        <Timer stopGame={stopGame} />
+        <button onClick={() => newGame()}>New Game</button>
+      </Controls>
+    </Wrapper>
   );
 }
 
 export default PlayGame;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Controls = styled.div`
+  height: 50vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20px;
+  justify-content: space-around;
+`;
+
+const ShowScore = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+
+  a,
+  a:visited {
+    color: white;
+  }
+`;

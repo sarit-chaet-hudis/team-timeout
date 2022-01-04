@@ -45,7 +45,7 @@ function GameBoard({ gotMatch, blocks }) {
       const selectedColor = currentBlocks[i];
       if (row.every((block) => currentBlocks[block] === selectedColor)) {
         row.forEach((block) => (currentBlocks[block] = 6));
-        // gotMatch(matchLength);
+        gotMatch(matchLength);
         return true;
       }
     }
@@ -135,7 +135,6 @@ function GameBoard({ gotMatch, blocks }) {
 
     if (blockBeingReplacedId && isValidMove) {
       // then check if the move ended with a match
-
       const row5 = chechRowMatch(5);
       const row4 = chechRowMatch(4);
       const row3 = chechRowMatch(3);

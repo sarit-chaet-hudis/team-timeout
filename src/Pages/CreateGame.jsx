@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import Picker from "emoji-picker-react";
 import styled from "styled-components";
@@ -129,7 +128,7 @@ const CreateGame = ({ blocks, updateBlocks }) => {
       <form>{renderSelectors()}</form>
       <hr />
       <button onClick={saveTeamSettings}>Save and get link</button>
-      <Link to="/play">Play</Link>
+      {/* <Link to="/play">Play</Link> */}
     </div>
   );
 };

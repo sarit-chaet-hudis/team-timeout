@@ -21,7 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/play/:teamUid" element={<PlayGame blocks={blocks} />} />
+        <Route path="/play/:teamUid" element={<PlayGame />} />
         <Route
           path="/create"
           element={<CreateGame blocks={blocks} updateBlocks={updateBlocks} />}

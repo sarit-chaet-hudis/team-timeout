@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CreateGame from "./Pages/CreateGame";
 import PlayGame from "./Pages/PlayGame";
+import HighScores from "./Pages/HighScores";
 import "./App.css";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           path="/create"
           element={<CreateGame blocks={blocks} updateBlocks={updateBlocks} />}
         />
+        <Route path="/highscores" element={<HighScores />} />
       </Routes>
     </BrowserRouter>
   );

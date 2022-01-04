@@ -1,6 +1,7 @@
 .board {
   display: flex;
   width: 90vmin;
+  min-width: 90vmin;
   height: 90vmin;
   display: flex;
   flex-wrap: wrap;

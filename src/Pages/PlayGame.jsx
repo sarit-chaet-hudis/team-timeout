@@ -14,6 +14,7 @@ function PlayGame() {
   const [teamSettings, setTeamSettings] = useState({});
   const [time, setTime] = useState(gameDuration);
   const [finishedLoading, setFinishedLoading] = useState(false);
+  const [playerName, setPlayerName] = useState("");
 
   const { teamUid } = useParams();
 
@@ -121,13 +122,49 @@ function PlayGame() {
     setCurrScore(0);
   };
 
+  const saveToHighScores = async () => {
+    const newHighscoreList = teamSettings.highscores;
+    // TODO check if should go into top ten, and SORT
+    newHighscoreList.push({ playerName: playerName, score: currScore });
+    const newTeamSettings = Object.assign({}, teamSettings);
+    newTeamSettings.highscores = newHighscoreList;
+    setTeamSettings(newTeamSettings);
+    try {
+      await axios.put(
+        `https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/${teamUid}`,
+        newTeamSettings
+      );
+    } catch (err) {
+      console.log("sorry, failed to save highscore data.", err);
+    }
+  };
+
   const renderShowScore = () => {
-    console.log("in renderShowScore");
+    console.log(teamSettings.highscores);
     return (
       <ShowScore>
         <h1>Game Over</h1>
         You got {currScore} points!
-        <Link to="/HighScores">See High Scores</Link>
+        {teamSettings.highscores.length > 0 ? (
+          <div>more than 10 high scores</div>
+        ) : (
+          <>
+            <div>
+              You are in the top 10, type your name to get into the highscores
+              list:
+            </div>
+            <input
+              type="text"
+              placeholder="Your name here"
+              onChange={(e) => setPlayerName(e.target.value)}
+              value={playerName}
+            ></input>
+            <button onClick={saveToHighScores}>Save Name</button>
+          </>
+        )}
+        <Link to="/highscores" state={{ teamSettings: teamSettings }}>
+          See High Scores
+        </Link>
         <button onClick={() => newGame()}>New Game</button>
       </ShowScore>
     );
@@ -142,6 +179,7 @@ function PlayGame() {
       )}
       {time === 0 ? renderShowScore() : null}
       <Controls>
+        <h1>{teamSettings.teamName}</h1>
         <Score currScore={currScore} />
         <Timer time={time} />
         <button onClick={() => newGame()}>New Game</button>
@@ -164,6 +202,7 @@ const Controls = styled.div`
   align-items: center;
   margin-left: 20px;
   justify-content: space-around;
+  text-align: center;
 `;
 
 const ShowScore = styled.div`
@@ -178,6 +217,7 @@ const ShowScore = styled.div`
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
+  line-height: 2;
 
   a,
   a:visited {

@@ -112,48 +112,50 @@ function GameBoard({ gotMatch, blocks }) {
 
   const onDragEnd = () => {
     // check if drag is valid, if so- replace blocks
+    if (blockBeingReplaced) {
+      const blockBeingDraggedId = +blockBeingDragged.getAttribute("data-id");
+      const blockBeingReplacedId = +blockBeingReplaced.getAttribute("data-id");
 
-    const blockBeingDraggedId = +blockBeingDragged.getAttribute("data-id");
-    const blockBeingReplacedId = +blockBeingReplaced.getAttribute("data-id");
-
-    // first: replace blocks
-    const temp = currentBlocks[blockBeingReplacedId];
-    currentBlocks[blockBeingReplacedId] = currentBlocks[blockBeingDraggedId];
-
-    currentBlocks[blockBeingDraggedId] = temp;
-
-    const validMoves = [
-      blockBeingDraggedId + 1,
-      blockBeingDraggedId - 1,
-      blockBeingDraggedId + width,
-      blockBeingDraggedId - width,
-      // TODO this does not test borders!!!
-    ];
-
-    // then check if valid move
-    const isValidMove = validMoves.includes(blockBeingReplacedId);
-
-    if (blockBeingReplacedId && isValidMove) {
-      // then check if the move ended with a match
-      const row5 = chechRowMatch(5);
-      const row4 = chechRowMatch(4);
-      const row3 = chechRowMatch(3);
-      const col5 = checkColMatch(5);
-      const col4 = checkColMatch(4);
-      const col3 = checkColMatch(3);
-
-      if (row3 || row4 || row5 || col3 || col4 || col5) {
-        // Move was valid and ended with a match. Leave blocks and reset drag
-        setBlockBeingDragged(null);
-        setBlockBeingReplaced(null);
-      }
-    } else {
-      // Return blocks to their original position
+      // first: replace blocks
       const temp = currentBlocks[blockBeingReplacedId];
       currentBlocks[blockBeingReplacedId] = currentBlocks[blockBeingDraggedId];
 
       currentBlocks[blockBeingDraggedId] = temp;
-      setCurrentBlocks([...currentBlocks]);
+
+      const validMoves = [
+        blockBeingDraggedId + 1,
+        blockBeingDraggedId - 1,
+        blockBeingDraggedId + width,
+        blockBeingDraggedId - width,
+        // TODO this does not test borders!!!
+      ];
+
+      // then check if valid move
+      const isValidMove = validMoves.includes(blockBeingReplacedId);
+
+      if (blockBeingReplacedId && isValidMove) {
+        // then check if the move ended with a match
+        const row5 = chechRowMatch(5);
+        const row4 = chechRowMatch(4);
+        const row3 = chechRowMatch(3);
+        const col5 = checkColMatch(5);
+        const col4 = checkColMatch(4);
+        const col3 = checkColMatch(3);
+
+        if (row3 || row4 || row5 || col3 || col4 || col5) {
+          // Move was valid and ended with a match. Leave blocks and reset drag
+          setBlockBeingDragged(null);
+          setBlockBeingReplaced(null);
+        }
+      } else {
+        // Return blocks to their original position
+        const temp = currentBlocks[blockBeingReplacedId];
+        currentBlocks[blockBeingReplacedId] =
+          currentBlocks[blockBeingDraggedId];
+
+        currentBlocks[blockBeingDraggedId] = temp;
+        setCurrentBlocks([...currentBlocks]);
+      }
     }
   };
 

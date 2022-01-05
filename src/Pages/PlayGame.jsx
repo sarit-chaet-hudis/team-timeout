@@ -24,7 +24,6 @@ function PlayGame() {
 
   const getTeamSettings = async () => {
     // Check for team settings on local storage, if not- get them from API
-    // TODO show loader
 
     const data = localStorage.getItem(teamUid);
     if (data) {
@@ -39,7 +38,6 @@ function PlayGame() {
 
   const getTeamSettingsFromApi = async () => {
     try {
-      console.log("trying to get from api with Uid ", teamUid);
       const teamData = await axios.get(
         "https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/",
         {
@@ -122,7 +120,7 @@ function PlayGame() {
 
     await getTeamSettingsFromApi();
 
-    // TODO check if should go into top ten
+    // TODO keep only one highscore per playerName
 
     const newHighscoreList = teamSettings.highscores;
     newHighscoreList.push({ playerName: playerName, score: currScore });
@@ -142,7 +140,6 @@ function PlayGame() {
   };
 
   const renderShowScore = () => {
-    console.log(teamSettings.highscores);
     return (
       <GameOver
         currScore={currScore}

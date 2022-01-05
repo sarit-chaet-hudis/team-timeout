@@ -10,3 +10,4 @@ https://docs.google.com/document/d/14sVLFwamLU-f9FkNIkpkHtwq6B-A38QDtXm2eulPtKw/
 - each player should only appear once in highscore table
 - blocks can sometimes be swapped with adjacent blocks
 - new game button doesn't reshuffle the blocks
+- game mechanics (valid moves) doesn't consider boundaries (no errors though)

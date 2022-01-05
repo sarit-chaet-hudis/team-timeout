@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import GameBoard from "../Components/GameBoard";
 import Timer from "../Components/Timer";
 import Score from "../Components/Score";
+import GameOver from "../Components/GameOver";
 
 const gameDuration = 10;
 
@@ -14,11 +15,8 @@ function PlayGame() {
   const [teamSettings, setTeamSettings] = useState({});
   const [time, setTime] = useState(gameDuration);
   const [finishedLoading, setFinishedLoading] = useState(false);
-  const [playerName, setPlayerName] = useState("");
 
   const { teamUid } = useParams();
-
-  let navigate = useNavigate();
 
   // useEffect(() => {
   //   if (matchStreak > 3) {
@@ -129,7 +127,7 @@ function PlayGame() {
     // TODO shuffle blocks in GameBoard
   };
 
-  const saveToHighScores = async () => {
+  const saveToHighScores = async (playerName) => {
     // get current scorelist from api.
 
     await getTeamSettingsFromApi();
@@ -165,31 +163,13 @@ function PlayGame() {
   const renderShowScore = () => {
     console.log(teamSettings.highscores);
     return (
-      <ShowScore>
-        <h1>Game Over</h1>
-        You got {currScore} points!
-        {/* {teamSettings.highscores.length > 0 ? (
-          <div>more than 10 high scores</div>
-        ) : ( */}
-        <>
-          <div>
-            You are in the top 10, type your name to get into the highscores
-            list:
-          </div>
-          <input
-            type="text"
-            placeholder="Your name here"
-            onChange={(e) => setPlayerName(e.target.value)}
-            value={playerName}
-          ></input>
-          <button onClick={saveToHighScores}>Save Name</button>
-        </>
-        ){/* } */}
-        <Link to="/highscores" state={{ teamSettings: teamSettings }}>
-          See High Scores
-        </Link>
-        <button onClick={() => newGame()}>New Game</button>
-      </ShowScore>
+      // turn into component
+      <GameOver
+        currScore={currScore}
+        teamSettings={teamSettings}
+        saveToHighScores={saveToHighScores}
+        newGame={newGame}
+      ></GameOver>
     );
   };
 
@@ -226,24 +206,4 @@ const Controls = styled.div`
   margin-left: 20px;
   justify-content: space-around;
   text-align: center;
-`;
-
-const ShowScore = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  line-height: 2;
-
-  a,
-  a:visited {
-    color: white;
-  }
 `;

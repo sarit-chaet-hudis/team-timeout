@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import GameBoard from "../Components/GameBoard";
-import Timer from "../Components/Timer";
-import Score from "../Components/Score";
+import Counter from "../Components/Counter";
 import GameOver from "../Components/GameOver";
 import back1 from "../Assets/images/WallpaperDog-16992541.jpg";
 
@@ -165,8 +164,9 @@ function PlayGame() {
       {time === 0 ? renderShowScore() : null}
       <Controls>
         <h1>{teamSettings.teamName}</h1>
-        <Score currScore={currScore} />
-        <Timer time={time} />
+        <Counter currCount={currScore} counterName="Score:" />
+        <Counter currCount={time} counterName="Time:" />
+
         <button onClick={() => newGame()}>New Game</button>
       </Controls>
     </Wrapper>

@@ -1,17 +1,18 @@
 import styled from "styled-components";
 
-const Score = ({ currScore }) => {
+const Counter = ({ counterName, currCount }) => {
   return (
-    <ShowScore>
-      <h2>Score:</h2>
-      {currScore.toLocaleString()}
-    </ShowScore>
+    <Wrapper>
+      <h2>{counterName}</h2>
+      {currCount.toLocaleString()}
+    </Wrapper>
   );
 };
 
-export default Score;
+export default Counter;
 
-const ShowScore = styled.div`
+const Wrapper = styled.div`
+  margin: 10px auto 30px;
   background: #ffffffe1;
   border-radius: 30px;
   padding: 0 30px 20px;

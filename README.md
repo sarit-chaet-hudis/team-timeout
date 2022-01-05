@@ -1,13 +1,30 @@
-## link to design doc
+## A fun competitive and customizable game for teams!
 
-https://docs.google.com/document/d/14sVLFwamLU-f9FkNIkpkHtwq6B-A38QDtXm2eulPtKw/edit?usp=sharing
+Built using react (hooks), styled components, react router.
 
-- Currently does not work on mobile
+## Live link at https://team-timeout.netlify.app/create
 
-## Known issues
+- Currently for desktop only :)
 
-- sometimes last highscore isn't saved correctly
-- each player should only appear once in highscore table
-- blocks can sometimes be swapped with adjacent blocks
-- new game button doesn't reshuffle the blocks
-- game mechanics (valid moves) doesn't consider boundaries (no errors though)
+![Play game screenshot](https://github.com/sarit-chaet-hudis/team-timeout/blob/main/src/Assets/images/Screenshot2.JPG)
+![Create new game screenshot](https://github.com/sarit-chaet-hudis/team-timeout/blob/main/src/Assets/images/Screenshot1.JPG)
+![Team Timout Flowchart](https://github.com/sarit-chaet-hudis/team-timeout/blob/main/src/Assets/images/team%20timeout-general%20flow.jpg)
+
+## Game Walkthrough
+
+1. Customize game: Choose gameblocks that represent everyday team activities
+2. Get unique link to your team game
+3. Play and see your team's highscores!
+
+## Known issues and Todos
+
+- Sometimes last highscore isn't saved correctly
+- Use global state management to simplify code
+- Each player should only appear once in highscore table
+- Blocks can sometimes be swapped with adjacent blocks
+- New game button doesn't reshuffle the blocks
+- Game mechanics (valid moves) doesn't consider boundaries (but no errors)
+
+bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Emoji picker component by [emoji-picker-react](https://github.com/ealush/emoji-picker-react)

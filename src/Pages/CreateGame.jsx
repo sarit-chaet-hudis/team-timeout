@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 const CreateGame = ({ blocks, updateBlocks }) => {
   const [teamName, setTeamName] = useState("");
+  const [URL, setURL] = useState("");
 
   const [showEmojiPicker, setShowEmojiPicker] = useState([
     false,
@@ -70,9 +71,8 @@ const CreateGame = ({ blocks, updateBlocks }) => {
         `https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/`,
         teamSettings
       );
-      console.log(
-        `Your team's game url is https://team-timeout.netlify.app/play/${teamSettings.teamUid} Share and Enjoy!`
-      );
+
+      setURL(`https://team-timeout.netlify.app/play/${teamSettings.teamUid}`);
     } catch (err) {
       console.log("sorry, failed to save team data.", err);
     }
@@ -127,8 +127,14 @@ const CreateGame = ({ blocks, updateBlocks }) => {
       </div>
       <form>{renderSelectors()}</form>
       <hr />
+
       <button onClick={saveTeamSettings}>Save and get link</button>
-      {/* <Link to="/play">Play</Link> */}
+      <br />
+      {URL.length > 0 ? (
+        <div>
+          <a href={URL}>Link to Your team's game</a> Share and Enjoy!
+        </div>
+      ) : null}
     </div>
   );
 };

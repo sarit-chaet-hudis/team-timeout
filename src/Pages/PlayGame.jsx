@@ -6,6 +6,7 @@ import GameBoard from "../Components/GameBoard";
 import Timer from "../Components/Timer";
 import Score from "../Components/Score";
 import GameOver from "../Components/GameOver";
+import back1 from "../Assets/images/WallpaperDog-16992541.jpg";
 
 const gameDuration = 10;
 
@@ -17,16 +18,6 @@ function PlayGame() {
   const [finishedLoading, setFinishedLoading] = useState(false);
 
   const { teamUid } = useParams();
-
-  // useEffect(() => {
-  //   if (matchStreak > 3) {
-  //     if (matchStreak > 8) {
-  //       console.log("YOU ARE ON A ROLL!!!");
-  //     } else {
-  //       console.log("Sweet!");
-  //     }
-  //   }
-  // }, [matchStreak]);
 
   useEffect(() => {
     getTeamSettings();
@@ -104,7 +95,7 @@ function PlayGame() {
 
   const gotMatch = (matchLength) => {
     setMatchStreak((prevStreak) => prevStreak + 1);
-    //console.log(matchStreak);
+
     switch (matchLength) {
       case 3:
         setCurrScore((currScore) => currScore + 10);
@@ -132,7 +123,7 @@ function PlayGame() {
 
     await getTeamSettingsFromApi();
 
-    // TODO check if should go into top ten, and SORT
+    // TODO check if should go into top ten
 
     const newHighscoreList = teamSettings.highscores;
     newHighscoreList.push({ playerName: playerName, score: currScore });
@@ -185,8 +176,17 @@ function PlayGame() {
 export default PlayGame;
 
 const Wrapper = styled.div`
+  background: url(${back1}) no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 0 30px;
   display: flex;
   align-items: center;
+  height: 100vh;
+  & h1 {
+    color: white;
+    text-shadow: 2px 2px 5px #333;
+  }
 `;
 
 const Controls = styled.div`

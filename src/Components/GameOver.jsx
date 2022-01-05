@@ -31,7 +31,7 @@ const GameOver = ({
   return (
     <Wrapper>
       <h1>Game Over</h1>
-      You got {currScore} points!
+      You got {currScore.toLocaleString()} points!
       {/* {teamSettings.highscores.length > 0 ? (
           <div>more than 10 high scores</div>
         ) : ( */}
@@ -44,7 +44,10 @@ const GameOver = ({
           value={playerName}
           maxLength="20"
         ></input>
-        <button onClick={() => onNameSave(playerName)}>Save Name</button>
+
+        <button className="shiny" onClick={() => onNameSave(playerName)}>
+          Save Name
+        </button>
       </>
       {/* } */}
       <button onClick={() => goToHighScores()}>See High Scores</button>

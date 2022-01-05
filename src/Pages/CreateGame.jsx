@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Picker from "emoji-picker-react";
 import styled from "styled-components";
+import back1 from "../Assets/images/WallpaperDog-16992345.jpg";
 
 const CreateGame = ({ blocks, updateBlocks }) => {
   const [teamName, setTeamName] = useState("");
@@ -108,40 +109,59 @@ const CreateGame = ({ blocks, updateBlocks }) => {
   };
 
   return (
-    <div>
-      <h1>Team Timeout</h1>
-      <h3>Create your own Team Game, and compete against each other!</h3>
-      <label htmlFor="teamName">Enter your Team's Name:</label>
-      <input
-        type="text"
-        name="teamName"
-        value={teamName}
-        onChange={(e) => setTeamName(e.target.value)}
-      ></input>
-      <hr />
-      <div>
-        What will be your team's game blocks?
+    <Create>
+      <Wrapper>
+        <h1>Team Timeout</h1>
+        <h3>Create your own Team Game, and compete against each other!</h3>
+        <label htmlFor="teamName">Enter your Team's Name:</label>
         <br />
-        Think of everyday activities, see examples below. Then choose an emoji
-        for each activity.
-      </div>
-      <form>{renderSelectors()}</form>
-      <hr />
+        <input
+          type="text"
+          name="teamName"
+          value={teamName}
+          onChange={(e) => setTeamName(e.target.value)}
+        ></input>
 
-      <button onClick={saveTeamSettings}>Save and get link</button>
-      <br />
-      {URL.length > 0 ? (
         <div>
-          <a href={URL}>Link to Your team's game</a> Share and Enjoy!
+          What will be your team's game blocks?
+          <br />
+          Think of everyday activities, see examples below. Then choose an emoji
+          for each activity.
         </div>
-      ) : null}
-    </div>
+        <form>{renderSelectors()}</form>
+
+        <button onClick={saveTeamSettings} className="shiny">
+          Save and get link
+        </button>
+        <br />
+        {URL.length > 0 ? (
+          <div>
+            <a href={URL}>Link to Your team's game</a> Share and Enjoy!
+          </div>
+        ) : null}
+      </Wrapper>
+    </Create>
   );
 };
 
 export default CreateGame;
 
+const Create = styled.div`
+  background: url(${back1}) no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 0 30px;
+`;
+
+const Wrapper = styled.div`
+  background: #ffffffe1;
+  width: 60vw;
+  padding: 20px;
+  text-align: center;
+`;
+
 const Selector = styled.div`
   display: flex;
   align-items: center;
+  height: calc(90vmin / 8);
 `;

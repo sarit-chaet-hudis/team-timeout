@@ -1,10 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+
 * {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin: 10px 0;
+}
+
+h1 {
+  font-family: "Lobster", cursive;
+  font-size: 3rem;
+  color: #35c4df;
+  text-shadow: 5px 5px 5px #eedfa8;
 }
 
 button {
-  border-radius: 5px;
+  border-radius: 15px;
   margin: 0px 15px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+
+.shiny {
+  background: rgb(255, 214, 84);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 214, 84, 1) 14%,
+    rgba(41, 181, 223, 1) 40%,
+    rgba(77, 223, 224, 1) 89%
+  );
+  padding: 10px 25px;
+  color: white;
+  font-weight: bold;
+  color: white;
+  font-size: 1.5rem;
+  font-family: "Lobster", cursive;
+  border: 1px solid #888;
 }
 
 input {

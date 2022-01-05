@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
 
@@ -10,6 +10,24 @@ const GameOver = ({
   teamUid,
 }) => {
   const [playerName, setPlayerName] = useState("");
+
+  let navigate = useNavigate();
+
+  const goToHighScores = () => {
+    navigate("../highscores", {
+      replace: true,
+      state: {
+        teamSettings: teamSettings,
+        teamUid: teamUid,
+      },
+    });
+  };
+
+  const onNameSave = async () => {
+    await saveToHighScores(playerName);
+    goToHighScores();
+  };
+
   return (
     <Wrapper>
       <h1>Game Over</h1>
@@ -24,16 +42,12 @@ const GameOver = ({
           placeholder="Your name here"
           onChange={(e) => setPlayerName(e.target.value)}
           value={playerName}
+          maxLength="20"
         ></input>
-        <button onClick={() => saveToHighScores(playerName)}>Save Name</button>
+        <button onClick={() => onNameSave(playerName)}>Save Name</button>
       </>
       {/* } */}
-      <Link
-        to="/highscores"
-        state={{ teamSettings: teamSettings, teamUid: teamUid }}
-      >
-        See High Scores
-      </Link>
+      <button onClick={() => goToHighScores()}>See High Scores</button>
       <button onClick={() => newGame()}>New Game</button>
     </Wrapper>
   );

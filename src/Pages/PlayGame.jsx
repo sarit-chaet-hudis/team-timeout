@@ -136,11 +136,9 @@ function PlayGame() {
 
     const newHighscoreList = teamSettings.highscores;
     newHighscoreList.push({ playerName: playerName, score: currScore });
+    newHighscoreList.sort((a, b) => b.score - a.score);
 
     const newTeamSettings = Object.assign({}, teamSettings);
-    console.log("~ newTeamSettings", newTeamSettings);
-
-    console.log("~ newTeamSettings.highscores", newTeamSettings.highscores);
 
     setTeamSettings(newTeamSettings);
     try {
@@ -151,19 +149,11 @@ function PlayGame() {
     } catch (err) {
       console.log("sorry, failed to save highscore data.", err);
     }
-
-    console.log(
-      "~ teamSettings.highscores after api put",
-      teamSettings.highscores
-    );
-
-    // navigate("/highscores", { replace: true });
   };
 
   const renderShowScore = () => {
     console.log(teamSettings.highscores);
     return (
-      // turn into component
       <GameOver
         currScore={currScore}
         teamSettings={teamSettings}

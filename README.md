@@ -25,6 +25,10 @@ Built using react (hooks), styled components, react router.
 - New game button doesn't reshuffle the blocks
 - Game mechanics (valid moves) doesn't consider boundaries (but no errors)
 
+## Acknowledgements
+
+- Game logic mostly based on [Ania Kubow's tutorial](https://github.com/kubowania/candy-crush-reactjs/blob/main/src/App.js) which was a huge time saver! I did clean/reuse/generalize quite a bit.
+
 bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Emoji picker component by [emoji-picker-react](https://github.com/ealush/emoji-picker-react)
+Emoji picker component by [emoji-picker-react](https://github.com/ealush/emoji-picker-react). worked like a charm and out of the box!!

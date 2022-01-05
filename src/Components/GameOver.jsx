@@ -2,7 +2,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
 
-const GameOver = ({ currScore, teamSettings, saveToHighScores, newGame }) => {
+const GameOver = ({
+  currScore,
+  teamSettings,
+  saveToHighScores,
+  newGame,
+  teamUid,
+}) => {
   const [playerName, setPlayerName] = useState("");
   return (
     <Wrapper>
@@ -12,9 +18,7 @@ const GameOver = ({ currScore, teamSettings, saveToHighScores, newGame }) => {
           <div>more than 10 high scores</div>
         ) : ( */}
       <>
-        <div>
-          You are in the top 10, type your name to get into the highscores list:
-        </div>
+        <div>Type your name to get into the highscores list:</div>
         <input
           type="text"
           placeholder="Your name here"
@@ -24,7 +28,10 @@ const GameOver = ({ currScore, teamSettings, saveToHighScores, newGame }) => {
         <button onClick={() => saveToHighScores(playerName)}>Save Name</button>
       </>
       {/* } */}
-      <Link to="/highscores" state={{ teamSettings: teamSettings }}>
+      <Link
+        to="/highscores"
+        state={{ teamSettings: teamSettings, teamUid: teamUid }}
+      >
         See High Scores
       </Link>
       <button onClick={() => newGame()}>New Game</button>

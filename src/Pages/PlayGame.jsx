@@ -169,6 +169,7 @@ function PlayGame() {
         teamSettings={teamSettings}
         saveToHighScores={saveToHighScores}
         newGame={newGame}
+        teamUid={teamUid}
       ></GameOver>
     );
   };

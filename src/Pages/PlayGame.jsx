@@ -122,7 +122,7 @@ function PlayGame() {
 
     // TODO keep only one highscore per playerName
 
-    const newHighscoreList = teamSettings.highscores;
+    const newHighscoreList = teamSettings.highscores.slice();
     newHighscoreList.push({ playerName: playerName, score: currScore });
     newHighscoreList.sort((a, b) => b.score - a.score);
 

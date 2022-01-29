@@ -11,7 +11,7 @@ const gameDuration = 10;
 
 function PlayGame() {
   const [currScore, setCurrScore] = useState(0);
-  const [matchStreak, setMatchStreak] = useState(0); // eslint-disable-line
+  // const [matchStreak, setMatchStreak] = useState(0);
   const [teamSettings, setTeamSettings] = useState({});
   const [time, setTime] = useState(gameDuration);
   const [finishedLoading, setFinishedLoading] = useState(false);
@@ -46,6 +46,7 @@ function PlayGame() {
           },
         }
       );
+      console.log("highscores after getfromAPI", teamData.highscores);
 
       // save to local storage team settings @ teamUid
       // setTeamSettings(teamData) from local storage
@@ -91,7 +92,7 @@ function PlayGame() {
   });
 
   const gotMatch = (matchLength) => {
-    setMatchStreak((prevStreak) => prevStreak + 1);
+    // setMatchStreak((prevStreak) => prevStreak + 1);
 
     switch (matchLength) {
       case 3:
@@ -116,16 +117,17 @@ function PlayGame() {
   };
 
   const saveToHighScores = async (playerName) => {
-    // get current scorelist from api.
-
     await getTeamSettingsFromApi();
 
     // TODO keep only one highscore per playerName
 
     const newHighscoreList = teamSettings.highscores.slice();
+    console.log("~ newHighscoreList", newHighscoreList);
     newHighscoreList.push({ playerName: playerName, score: currScore });
+    console.log("~ currScore", currScore);
+    console.log("~ playerName", playerName);
     newHighscoreList.sort((a, b) => b.score - a.score);
-
+    console.log("~ newHighscoreList after push and sort", newHighscoreList);
     const newTeamSettings = Object.assign({}, teamSettings);
 
     setTeamSettings(newTeamSettings);

@@ -2,11 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import Picker from "emoji-picker-react";
 import styled from "styled-components";
+import { defaultBlocks } from "./defaultBlocks";
 import back1 from "../Assets/images/WallpaperDog-16992345.jpg";
 
-const CreateGame = ({ blocks, updateBlocks }) => {
+const CreateGame = () => {
   const [teamName, setTeamName] = useState("");
   const [URL, setURL] = useState("");
+  const [blocks, updateBlocks] = useState(defaultBlocks);
 
   const [showEmojiPicker, setShowEmojiPicker] = useState([
     false,

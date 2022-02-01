@@ -23,8 +23,6 @@ function PlayGame() {
   }, []); // eslint-disable-line
 
   const getTeamSettings = async () => {
-    // Check for team settings on local storage, if not- get them from API
-
     const data = localStorage.getItem(teamUid);
     if (data) {
       parseFromLocalStorageToState(data, teamUid);
@@ -122,13 +120,12 @@ function PlayGame() {
     // TODO keep only one highscore per playerName
 
     const newHighscoreList = teamSettings.highscores.slice();
-    console.log("~ newHighscoreList", newHighscoreList);
+
     newHighscoreList.push({ playerName: playerName, score: currScore });
-    console.log("~ currScore", currScore);
-    console.log("~ playerName", playerName);
     newHighscoreList.sort((a, b) => b.score - a.score);
-    console.log("~ newHighscoreList after push and sort", newHighscoreList);
+
     const newTeamSettings = Object.assign({}, teamSettings);
+    newTeamSettings.highscores = newHighscoreList;
 
     setTeamSettings(newTeamSettings);
     try {

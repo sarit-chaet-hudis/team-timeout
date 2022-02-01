@@ -82,7 +82,7 @@ function GameBoard({ gotMatch, blocks }) {
       }
 
       if (currentBlocks[i + width] === 6) {
-        // below is empty, "move" down the
+        // place below current block is empty, "move" down
         currentBlocks[i + width] = currentBlocks[i];
         currentBlocks[i] = 6;
       }
@@ -118,8 +118,8 @@ function GameBoard({ gotMatch, blocks }) {
 
       // first: replace blocks
       const temp = currentBlocks[blockBeingReplacedId];
+      // TODO This writes directly into state without the setter func.. repair
       currentBlocks[blockBeingReplacedId] = currentBlocks[blockBeingDraggedId];
-
       currentBlocks[blockBeingDraggedId] = temp;
 
       const validMoves = [
@@ -127,7 +127,7 @@ function GameBoard({ gotMatch, blocks }) {
         blockBeingDraggedId - 1,
         blockBeingDraggedId + width,
         blockBeingDraggedId - width,
-        // TODO this does not test borders!!!
+        // TODO this does not account for borders!!!
       ];
 
       // then check if valid move

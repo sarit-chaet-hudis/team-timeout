@@ -71,7 +71,7 @@ const CreateGame = () => {
 
     try {
       await axios.post(
-        `https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/`,
+        `https://team-timeout-server.herokuapp.com/api/add/${teamSettings.teamUid}`,
         teamSettings
       );
 

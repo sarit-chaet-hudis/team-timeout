@@ -57,21 +57,15 @@ const CreateGame = () => {
 
   const saveTeamSettings = async () => {
     const teamSettings = {
-      //  obj: {
-      //     "blocks" : [{id, color, title, emoji},{},..],
-      //     "highscores" : [{rank,name,score},{}..],
-      //     "teamName" : "team name",
-      //     "teamUid" : "lfgh94t0u35"
-      //     }
       teamUid: generateTeamUid(),
       teamName: teamName,
       blocks: blocks,
-      highscores: [],
     };
+    console.log("~ teamSettings before post", teamSettings);
 
     try {
       await axios.post(
-        `https://team-timeout-server.herokuapp.com/api/add/${teamSettings.teamUid}`,
+        `https://team-timeout-server.herokuapp.com/api/add/`,
         teamSettings
       );
 

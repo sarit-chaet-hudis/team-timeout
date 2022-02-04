@@ -1,14 +1,15 @@
-.board {
+import styled from "styled-components";
+
+const BoardStyled = styled.div`
   display: flex;
   width: 90vmin;
   min-width: 90vmin;
   height: 90vmin;
   display: flex;
   flex-wrap: wrap;
-  /* background-color: rgba(0, 0, 0, 0.75); */
-}
+`;
 
-.gameBlock {
+const GameBlockStyled = styled.div`
   position: relative;
   margin: 5px;
   border-radius: 40%;
@@ -27,14 +28,16 @@
   text-align: center;
   color: white;
   font-size: 1.7vmin;
-}
+`;
 
-.gameBlock .emoji {
+const EmojiStyled = styled.span`
   font-size: 3vmin;
   line-height: 3min;
-}
+`;
 
-.empty {
+const EmptyStyled = styled.div`
   background-color: transparent;
   box-shadow: none;
-}
+`;
+
+export { BoardStyled, GameBlockStyled, EmptyStyled, EmojiStyled };

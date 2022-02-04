@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import Picker from "emoji-picker-react";
-import styled from "styled-components";
 import { defaultBlocks } from "./defaultBlocks";
-import back1 from "../Assets/images/WallpaperDog-16992345.jpg";
+import CreateStyled from "../Styles/CreateGame/CreateStyled.style";
+import { Wrapper, Selector } from "../Styles/CreateGame/Wrapper.style";
 
 const CreateGame = () => {
   const [teamName, setTeamName] = useState("");
@@ -105,7 +105,7 @@ const CreateGame = () => {
   };
 
   return (
-    <Create>
+    <CreateStyled>
       <Wrapper>
         <h1>Team Timeout</h1>
         <h3>Create your own Team Game, and compete against each other!</h3>
@@ -136,28 +136,8 @@ const CreateGame = () => {
           </div>
         ) : null}
       </Wrapper>
-    </Create>
+    </CreateStyled>
   );
 };
 
 export default CreateGame;
-
-const Create = styled.div`
-  background: url(${back1}) no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  padding: 0 30px;
-`;
-
-const Wrapper = styled.div`
-  background: #ffffffe1;
-  width: 60vw;
-  padding: 20px;
-  text-align: center;
-`;
-
-const Selector = styled.div`
-  display: flex;
-  align-items: center;
-  height: calc(90vmin / 8);
-`;

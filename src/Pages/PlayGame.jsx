@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import GameBoard from "../Components/GameBoard";
 import Counter from "../Components/Counter";
 import GameOver from "../Components/GameOver";
-import back1 from "../Assets/images/WallpaperDog-16992541.jpg";
+import { Wrapper, Controls } from "../Styles/PlayGameStyled.style";
 
 const gameDuration = 10;
 
@@ -24,7 +23,7 @@ function PlayGame() {
 
   const getTeamSettings = async () => {
     const data = localStorage.getItem(teamUid);
-    if (data) {
+    if (data.length > 0) {
       parseFromLocalStorageToState(data, teamUid);
     } else {
       await getTeamSettingsFromApi();
@@ -35,25 +34,19 @@ function PlayGame() {
   };
 
   const getTeamSettingsFromApi = async () => {
+    console.log("in get from api");
+    console.log("~ teamUid", teamUid);
+
+    // get team from api, set to local storage and setTeamSettings(teamData) from local storage
     try {
       const teamData = await axios.get(
-        "https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/",
-        {
-          params: {
-            teamUid: teamUid,
-          },
-        }
+        `https://team-timeout-server.herokuapp.com/api/get/${teamUid}`
       );
-      console.log("highscores after getfromAPI", teamData.highscores);
-
-      // save to local storage team settings @ teamUid
-      // setTeamSettings(teamData) from local storage
 
       const teamSettingsFromApi = {
-        teamName: teamData.data[0].teamName,
-        blocks: teamData.data[0].blocks,
-        highscores: teamData.data[0].highscores,
-        ApiId: teamData.data[0].id,
+        teamName: teamData.data.teamName,
+        blocks: teamData.data.blocks,
+        highscores: teamData.data.highscores,
       };
 
       localStorage.setItem(teamUid, JSON.stringify(teamSettingsFromApi));
@@ -115,27 +108,16 @@ function PlayGame() {
   };
 
   const saveToHighScores = async (playerName) => {
-    await getTeamSettingsFromApi();
-
-    // TODO keep only one highscore per playerName
-
-    const newHighscoreList = teamSettings.highscores.slice();
-
-    newHighscoreList.push({ playerName: playerName, score: currScore });
-    newHighscoreList.sort((a, b) => b.score - a.score);
-
-    const newTeamSettings = Object.assign({}, teamSettings);
-    newTeamSettings.highscores = newHighscoreList;
-
-    setTeamSettings(newTeamSettings);
-    try {
-      await axios.put(
-        `https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/${teamSettings.ApiId}`,
-        newTeamSettings
-      );
-    } catch (err) {
-      console.log("sorry, failed to save highscore data.", err);
-    }
+    //  { playerName: playerName, score: currScore }
+    // setTeamSettings(newTeamSettings);
+    // try {
+    //   await axios.put(
+    //     `https://61d2d7dcb4c10c001712b604.mockapi.io/teams/teams/${teamSettings.ApiId}`,
+    //     newTeamSettings
+    //   );
+    // } catch (err) {
+    //   console.log("sorry, failed to save highscore data.", err);
+    // }
   };
 
   const renderShowScore = () => {
@@ -170,27 +152,3 @@ function PlayGame() {
 }
 
 export default PlayGame;
-
-const Wrapper = styled.div`
-  background: url(${back1}) no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  padding: 0 30px;
-  display: flex;
-  align-items: center;
-  height: 100vh;
-  & h1 {
-    color: white;
-    text-shadow: 2px 2px 5px #333;
-  }
-`;
-
-const Controls = styled.div`
-  height: 50vmin;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 20px;
-  justify-content: space-around;
-  text-align: center;
-`;

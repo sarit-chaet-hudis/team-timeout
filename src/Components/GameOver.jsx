@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { useState } from "react";
+import GameOverStyled from "../Styles/GameOverStyled.style";
 
 const GameOver = ({
   currScore,
@@ -29,7 +29,7 @@ const GameOver = ({
   };
 
   return (
-    <Wrapper>
+    <GameOverStyled>
       <h1>Game Over</h1>
       You got {currScore.toLocaleString()} points!
       <div>Type your name to get into the highscores list:</div>
@@ -45,28 +45,8 @@ const GameOver = ({
       </button>
       <button onClick={() => goToHighScores()}>See High Scores</button>
       <button onClick={() => newGame()}>New Game</button>
-    </Wrapper>
+    </GameOverStyled>
   );
 };
 
 export default GameOver;
-
-const Wrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  line-height: 2;
-
-  a,
-  a:visited {
-    color: white;
-  }
-`;

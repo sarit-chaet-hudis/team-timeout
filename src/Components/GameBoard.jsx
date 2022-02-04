@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import "./GameBoard.css";
+import {
+  BoardStyled,
+  GameBlockStyled,
+  EmptyStyled,
+  EmojiStyled,
+} from "../Styles/Gameboard.style";
 
 const width = 8;
 
@@ -161,12 +166,10 @@ function GameBoard({ gotMatch, blocks }) {
 
   const renderBlock = (blockType, index) => {
     //blockType is integer between 0 -> 6
-    if (blockType === 6)
-      return <div className="gameBlock empty" key={index}></div>;
+    if (blockType === 6) return <EmptyStyled key={index}></EmptyStyled>;
     else {
       return (
-        <div
-          className="gameBlock"
+        <GameBlockStyled
           key={index}
           style={{ backgroundColor: blocks[blockType].color }}
           data-id={index}
@@ -178,19 +181,17 @@ function GameBoard({ gotMatch, blocks }) {
           onDrop={onDrop}
           onDragEnd={onDragEnd}
         >
-          <span className="emoji" data-id={index}>
-            {blocks[blockType].emoji}
-          </span>
+          <EmojiStyled data-id={index}>{blocks[blockType].emoji}</EmojiStyled>
           {blocks[blockType].title}
-        </div>
+        </GameBlockStyled>
       );
     }
   };
 
   return (
-    <div className="board">
+    <BoardStyled>
       {currentBlocks.map((blockType, index) => renderBlock(blockType, index))}
-    </div>
+    </BoardStyled>
   );
 }
 

@@ -1,27 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
 
-const GameOver = ({
-  currScore,
-  teamSettings,
-  saveToHighScores,
-  newGame,
-  teamUid,
-}) => {
+const GameOver = ({ currScore, saveToHighScores, newGame, goToHighScores }) => {
   const [playerName, setPlayerName] = useState("");
-
-  let navigate = useNavigate();
-
-  const goToHighScores = () => {
-    navigate("../highscores", {
-      replace: true,
-      state: {
-        teamSettings: teamSettings,
-        teamUid: teamUid,
-      },
-    });
-  };
 
   const onNameSave = async () => {
     await saveToHighScores(playerName);

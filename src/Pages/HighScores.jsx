@@ -1,22 +1,51 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import back1 from "../Assets/images/WallpaperDog-16992345.jpg";
-import cocktail1 from "../Assets/images/cocktail3.png";
 
 const HighScores = () => {
-  const { state } = useLocation();
-  const { teamSettings, teamUid } = state;
+  const [teamSettings, setTeamSettings] = useState({});
+
+  const { teamUid } = useParams();
+
   const navigate = useNavigate();
 
-  const renderScores = () => {
-    return teamSettings.highscores.map((score, index) => {
-      return (
-        <HighScore key={index}>
-          <div>{score.playerName}</div>
-          <Score>{score.score.toLocaleString()}</Score>
-        </HighScore>
+  const getTeamSettingsFromApi = async () => {
+    try {
+      const teamData = await axios.get(
+        `https://team-timeout-server.herokuapp.com/api/get/${teamUid}`
       );
-    });
+
+      const teamSettingsFromApi = {
+        teamName: teamData.data.teamName,
+        highscores: teamData.data.highscores,
+      };
+
+      setTeamSettings(teamSettingsFromApi);
+      console.log("~ teamSettingsFromApi", teamSettingsFromApi);
+    } catch (err) {
+      console.log(`sorry, can't get team data. ${err}`);
+    }
+  };
+
+  useEffect(() => {
+    getTeamSettingsFromApi();
+  }, []); // eslint-disable-line
+
+  const renderScores = () => {
+    try {
+      return teamSettings.highscores.map((score, index) => {
+        return (
+          <HighScore key={index}>
+            <div>{score.playerName}</div>
+            <Score>{score.score.toLocaleString()}</Score>
+          </HighScore>
+        );
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   const goToPlay = () => {
@@ -32,9 +61,8 @@ const HighScores = () => {
         <HighScoreTable>{renderScores()}</HighScoreTable>
         <div>
           <button className="shiny" onClick={goToPlay}>
-            Play Again
+            Play Again!
           </button>
-          <Cocktail />
         </div>
       </Wrapper>
     </HighScorePage>
@@ -57,6 +85,7 @@ const Wrapper = styled.div`
   padding: 20px;
   text-align: center;
   height: 100vh;
+  overflow-y: scroll;
 `;
 
 const HighScoreTable = styled.div`
@@ -76,11 +105,4 @@ const HighScore = styled.div`
 
 const Score = styled.div`
   text-align: center;
-`;
-
-const Cocktail = styled.div`
-  background: url(${cocktail1}) no-repeat 50%;
-  background-size: 10%;
-  transform: rotate(15deg);
-  height: 200px;
 `;

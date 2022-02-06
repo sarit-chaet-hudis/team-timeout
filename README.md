@@ -16,6 +16,10 @@ Built using react (hooks), styled components, react router.
 2. Get unique link to your team game
 3. Play and see your team's highscores!
 
+## Backend: Express server, mongoDB
+
+link to backend repo: https://github.com/sarit-chaet-hudis/team-timeout-server
+
 ## Known issues and Todos
 
 - Sometimes last highscore isn't saved correctly

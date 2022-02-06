@@ -154,6 +154,7 @@ const Wrapper = styled.div`
   width: 60vw;
   padding: 20px;
   text-align: center;
+  overflow-y: scroll;
 `;
 
 const Selector = styled.div`

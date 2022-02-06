@@ -4,12 +4,12 @@ import {} from "react-router-dom";
 import axios from "axios";
 import produce from "immer";
 import styled from "styled-components";
-import GameBoard from "../Components/GameBoard";
+import GameBoardTest2 from "../Components/GameBoardTest2";
 import Counter from "../Components/Counter";
 import GameOver from "../Components/GameOver";
 import back1 from "../Assets/images/WallpaperDog-16992541.jpg";
 
-const gameDuration = 10;
+const gameDuration = 30;
 
 function PlayGame() {
   const [currScore, setCurrScore] = useState(0);
@@ -148,7 +148,7 @@ function PlayGame() {
   return (
     <Wrapper>
       {finishedLoading ? (
-        <GameBoard blocks={teamSettings.blocks} gotMatch={gotMatch} />
+        <GameBoardTest2 blocks={teamSettings.blocks} gotMatch={gotMatch} />
       ) : (
         <div>Loading...</div>
       )}

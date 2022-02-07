@@ -9,7 +9,7 @@ import Counter from "../Components/Counter";
 import GameOver from "../Components/GameOver";
 import back1 from "../Assets/images/WallpaperDog-16992541.jpg";
 
-const gameDuration = 30;
+const gameDuration = 3000;
 
 function PlayGame() {
   const [currScore, setCurrScore] = useState(0);

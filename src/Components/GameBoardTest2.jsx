@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import Draggable from "react-draggable";
+import toPX from "to-px";
 import "./GameBoardTest.css";
 
 const width = 8;
+
+const vmin = toPX("vmin");
 
 function GameBoard({ gotMatch, blocks }) {
   const [currentBlocks, setCurrentBlocks] = useState([]);
@@ -113,6 +116,9 @@ function GameBoard({ gotMatch, blocks }) {
   const onDragEnd = (e) => {
     // check if drag is valid, if so- replace blocks
     setBlockBeingReplaced(e.target);
+    console.log("~ e.target", e.target);
+    console.log("is this the block were trying to replace?");
+
     if (blockBeingReplaced) {
       const blockBeingDraggedId = +blockBeingDragged.getAttribute("data-id");
       const blockBeingReplacedId = +blockBeingReplaced.getAttribute("data-id");
@@ -166,10 +172,14 @@ function GameBoard({ gotMatch, blocks }) {
       return <div className="gameBlock empty" key={index}></div>;
     else {
       return (
-        <Draggable axis="both" onStart={onDragStart} onStop={onDragEnd}>
+        <Draggable
+          key={index}
+          grid={[(90 * vmin) / 8, (90 * vmin) / 8]}
+          onStart={onDragStart}
+          onStop={onDragEnd}
+        >
           <div
             className="gameBlock"
-            key={index}
             style={{ backgroundColor: blocks[blockType].color }}
             data-id={index}
           >

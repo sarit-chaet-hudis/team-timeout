@@ -4,10 +4,13 @@ import {} from "react-router-dom";
 import axios from "axios";
 import produce from "immer";
 import styled from "styled-components";
-import GameBoardTest2 from "../Components/GameBoardTest2";
+// import GameBoardTest2 from "../Components/GameBoardTest2";
+// import Test from "../Components/Test";
 import Counter from "../Components/Counter";
 import GameOver from "../Components/GameOver";
 import back1 from "../Assets/images/WallpaperDog-16992541.jpg";
+//import TestToam from "../Components/Test.toam.v1";
+import RGL from "../Components/RGL";
 
 const gameDuration = 3000;
 
@@ -69,25 +72,26 @@ function PlayGame() {
   };
 
   // Timer functionality
-  useEffect(() => {
-    const timerInterval = setInterval(() => {
-      if (time > 0) {
-        setTime(time - 1);
-        if (time === 1) {
-          clearInterval(timerInterval);
-        }
-      }
-    }, 1000);
-    return () => {
-      clearInterval(timerInterval);
-    };
-  });
+  // useEffect(() => {
+  //   const timerInterval = setInterval(() => {
+  //     if (time > 0) {
+  //       setTime(time - 1);
+  //       if (time === 1) {
+  //         clearInterval(timerInterval);
+  //       }
+  //     }
+  //   }, 1000);
+  //   return () => {
+  //     clearInterval(timerInterval);
+  //   };
+  // });
 
   const gotMatch = (matchLength) => {
     // setMatchStreak((prevStreak) => prevStreak + 1);
-
+    console.log("in gotMatch, length is", matchLength);
     switch (matchLength) {
       case 3:
+        console.log("in gotMatch, length is", matchLength);
         setCurrScore((currScore) => currScore + 10);
         break;
       case 4:
@@ -148,8 +152,10 @@ function PlayGame() {
   return (
     <Wrapper>
       {finishedLoading ? (
-        <GameBoardTest2 blocks={teamSettings.blocks} gotMatch={gotMatch} />
+        // <Test blocks={teamSettings.blocks} />
+        <RGL />
       ) : (
+        // gotMatch={gotMatch} />
         <div>Loading...</div>
       )}
       {time === 0 ? renderShowScore() : null}

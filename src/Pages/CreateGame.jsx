@@ -147,6 +147,9 @@ const Create = styled.div`
   background-size: cover;
   background-attachment: fixed;
   padding: 0 30px;
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -155,10 +158,19 @@ const Wrapper = styled.div`
   padding: 20px;
   text-align: center;
   overflow-y: scroll;
+  @media (max-width: 768px) {
+    width: 100vw;
+    padding: 0;
+  }
 `;
 
 const Selector = styled.div`
   display: flex;
   align-items: center;
   height: calc(90vmin / 8);
+  position: relative;
+  .emoji-picker-react {
+    position: absolute;
+    width: 80%;
+  }
 `;

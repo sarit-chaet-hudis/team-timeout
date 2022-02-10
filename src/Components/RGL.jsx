@@ -12,12 +12,32 @@ const RGL = () => {
   const [blockBeingDragged, setBlockBeingDragged] = useState(null);
   //const [blockBeingReplaced, setBlockBeingReplaced] = useState(null);
 
-  const initLayout = [
-    { i: "a", x: 0, y: 0, w: 1, h: 1, isResizable: false },
-    { i: "b", x: 1, y: 0, w: 1, h: 1, isResizable: false },
-    { i: "c", x: 2, y: 0, w: 1, h: 1, isResizable: false },
-  ];
-  const [layout, setLayout] = useState(initLayout);
+  const arrayGridDivs = () => {
+    const res = [];
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        res.push(
+          <div
+            key={`${i}${j}`}
+            data-grid={{
+              x: i,
+              y: j,
+              w: 1,
+              h: 1,
+              isResizable: false,
+            }}
+          >
+            {`${i}${j}`}
+          </div>
+        );
+      }
+    }
+    console.log("~ res", res);
+
+    return res;
+  };
+
+  const [layout, setLayout] = useState([]);
 
   const saveLayout = (currentLayout) => {
     setLayout(currentLayout);
@@ -26,6 +46,7 @@ const RGL = () => {
   const dragStart = (e, element) => {
     console.log("start drag", element);
     setBlockBeingDragged(e.target);
+    console.log(blockBeingDragged);
   };
 
   const dragStop = (layout, oldItem, newItem, placeholder, e, element) => {
@@ -40,7 +61,7 @@ const RGL = () => {
     <div style={{ width: "90vmin" }}>
       <GridLayout
         className="layout"
-        layout={layout}
+        // layout=
         cols={8}
         rowHeight={(90 * vmin) / 8}
         width={90 * vmin}
@@ -48,9 +69,7 @@ const RGL = () => {
         onDragStart={dragStart}
         onDragStop={dragStop}
       >
-        <div key="a">a</div>
-        <div key="b">b</div>
-        <div key="c">c</div>
+        {arrayGridDivs().map((div) => div)}
       </GridLayout>
     </div>
   );

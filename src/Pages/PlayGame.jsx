@@ -1,22 +1,17 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {} from "react-router-dom";
 import axios from "axios";
 import produce from "immer";
 import styled from "styled-components";
-// import GameBoardTest2 from "../Components/GameBoardTest2";
-// import Test from "../Components/Test";
 import Counter from "../Components/Counter";
 import GameOver from "../Components/GameOver";
 import back1 from "../Assets/images/WallpaperDog-16992541.jpg";
-//import TestToam from "../Components/Test.toam.v1";
-import RGL from "../Components/RGL";
+import GameBoard from "../Components/GameBoard";
 
-const gameDuration = 3000;
+const gameDuration = 10;
 
 function PlayGame() {
   const [currScore, setCurrScore] = useState(0);
-  // const [matchStreak, setMatchStreak] = useState(0);
   const [teamSettings, setTeamSettings] = useState({});
   const [time, setTime] = useState(gameDuration);
   const [finishedLoading, setFinishedLoading] = useState(false);
@@ -72,19 +67,19 @@ function PlayGame() {
   };
 
   // Timer functionality
-  // useEffect(() => {
-  //   const timerInterval = setInterval(() => {
-  //     if (time > 0) {
-  //       setTime(time - 1);
-  //       if (time === 1) {
-  //         clearInterval(timerInterval);
-  //       }
-  //     }
-  //   }, 1000);
-  //   return () => {
-  //     clearInterval(timerInterval);
-  //   };
-  // });
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      if (time > 0) {
+        setTime(time - 1);
+        if (time === 1) {
+          clearInterval(timerInterval);
+        }
+      }
+    }, 1000);
+    return () => {
+      clearInterval(timerInterval);
+    };
+  });
 
   const gotMatch = (matchLength) => {
     // setMatchStreak((prevStreak) => prevStreak + 1);
@@ -152,10 +147,8 @@ function PlayGame() {
   return (
     <Wrapper>
       {finishedLoading ? (
-        // <Test blocks={teamSettings.blocks} />
-        <RGL />
+        <GameBoard blocks={teamSettings.blocks} gotMatch={gotMatch} />
       ) : (
-        // gotMatch={gotMatch} />
         <div>Loading...</div>
       )}
       {time === 0 ? renderShowScore() : null}

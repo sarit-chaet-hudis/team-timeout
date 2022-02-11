@@ -3,8 +3,10 @@ import { useState } from "react";
 
 const GameOver = ({ currScore, saveToHighScores, newGame, goToHighScores }) => {
   const [playerName, setPlayerName] = useState("");
+  const [userMessage, setUserMessage] = useState("");
 
   const onNameSave = async () => {
+    setUserMessage("Saving..");
     await saveToHighScores(playerName);
     goToHighScores();
   };
@@ -24,6 +26,7 @@ const GameOver = ({ currScore, saveToHighScores, newGame, goToHighScores }) => {
       <button className="shiny" onClick={() => onNameSave(playerName)}>
         Save Name
       </button>
+      <p>{userMessage}</p>
       <button onClick={() => goToHighScores()}>See High Scores</button>
       <button onClick={() => newGame()}>New Game</button>
     </Wrapper>

@@ -169,8 +169,4 @@ const Selector = styled.div`
   align-items: center;
   height: calc(90vmin / 8);
   position: relative;
-  .emoji-picker-react {
-    position: absolute;
-    width: 80%;
-  }
 `;

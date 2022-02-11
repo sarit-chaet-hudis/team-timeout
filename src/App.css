@@ -34,6 +34,11 @@ button {
   margin: 5px 15px;
   padding: 3px 10px;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+button:hover {
+  transform: rotate(4deg);
 }
 
 .shiny {

@@ -23,7 +23,6 @@ const HighScores = () => {
       };
 
       setTeamSettings(teamSettingsFromApi);
-      console.log("~ teamSettingsFromApi", teamSettingsFromApi);
     } catch (err) {
       console.log(`sorry, can't get team data. ${err}`);
     }

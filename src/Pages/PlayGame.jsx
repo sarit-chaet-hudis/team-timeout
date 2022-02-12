@@ -111,7 +111,6 @@ function PlayGame() {
         `https://team-timeout-server.herokuapp.com/api/update/${teamUid}`,
         newScore
       );
-      console.log("~ updatedHighscores", updatedHighscores.data);
       const newTeamSettings = produce(teamSettings, (draft) => {
         draft.highscores = updatedHighscores.data;
       });

@@ -165,13 +165,12 @@ const Create = styled.div`
   background-size: cover;
   background-attachment: fixed;
   padding: 0 30px;
-  height: 100%;
 `;
 
 const Wrapper = styled.div`
   background: #ffffffe1;
   width: 60vw;
-  padding: 20px;
+  padding: 0 30px;
   text-align: center;
   height: 100vh;
   overflow-y: scroll;

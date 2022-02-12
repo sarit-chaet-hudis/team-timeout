@@ -13,7 +13,8 @@ h3 {
 }
 
 h1,
-h2 {
+h2,
+.number {
   font-family: "Lobster", cursive, "Secular One";
   color: #35c4df;
   text-shadow: 5px 5px 5px #eedfa8;
@@ -25,8 +26,9 @@ h1 {
 
 a,
 a:visited {
+  font-family: "Lobster", cursive, "Secular One";
   color: inherit;
-  font-weight: bolder;
+  font-size: xx-large;
 }
 
 button {
@@ -61,4 +63,8 @@ input {
   height: fit-content;
   border-radius: 5px;
   margin: 0px 15px;
+}
+
+.number {
+  font-size: xx-large;
 }

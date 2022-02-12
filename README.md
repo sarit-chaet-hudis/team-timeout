@@ -23,7 +23,6 @@ https://github.com/sarit-chaet-hudis/team-timeout-server
 ## Known issues and Todos
 
 - Each player should only appear once in highscore table
-- Blocks can be swapped with adjacent blocks even when there's no match
 - New game button doesn't reshuffle the blocks
 - Game mechanics (valid moves) doesn't consider boundaries
 

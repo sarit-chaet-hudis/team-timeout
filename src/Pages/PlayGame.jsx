@@ -82,11 +82,8 @@ function PlayGame() {
   });
 
   const gotMatch = (matchLength) => {
-    // setMatchStreak((prevStreak) => prevStreak + 1);
-    console.log("in gotMatch, length is", matchLength);
     switch (matchLength) {
       case 3:
-        console.log("in gotMatch, length is", matchLength);
         setCurrScore((currScore) => currScore + 10);
         break;
       case 4:
@@ -104,7 +101,6 @@ function PlayGame() {
   const newGame = () => {
     setTime(gameDuration);
     setCurrScore(0);
-    // TODO shuffle blocks in GameBoard
   };
 
   const saveToHighScores = async (playerName) => {

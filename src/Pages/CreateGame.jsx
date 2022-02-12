@@ -143,13 +143,11 @@ const CreateGame = () => {
 export default CreateGame;
 
 const Create = styled.div`
-  background: url(${back1}) no-repeat;
+  background: url(${back1}) no-repeat center;
   background-size: cover;
   background-attachment: fixed;
   padding: 0 30px;
-  @media (max-width: 768px) {
-    padding: 0;
-  }
+  height: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -157,11 +155,8 @@ const Wrapper = styled.div`
   width: 60vw;
   padding: 20px;
   text-align: center;
+  height: 100vh;
   overflow-y: scroll;
-  @media (max-width: 768px) {
-    width: 100vw;
-    padding: 0;
-  }
 `;
 
 const Selector = styled.div`

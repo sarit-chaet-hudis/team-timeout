@@ -118,7 +118,6 @@ function GameBoard({ gotMatch, blocks }) {
 
       // first: replace blocks
       const temp = currentBlocks[blockBeingReplacedId];
-      // TODO This writes directly into state without the setter func.. repair
       currentBlocks[blockBeingReplacedId] = currentBlocks[blockBeingDraggedId];
       currentBlocks[blockBeingDraggedId] = temp;
 
@@ -127,7 +126,6 @@ function GameBoard({ gotMatch, blocks }) {
         blockBeingDraggedId - 1,
         blockBeingDraggedId + width,
         blockBeingDraggedId - width,
-        // TODO this does not account for borders!!!
       ];
 
       // then check if valid move
@@ -146,15 +144,15 @@ function GameBoard({ gotMatch, blocks }) {
           // Move was valid and ended with a match. Leave blocks and reset drag
           setBlockBeingDragged(null);
           setBlockBeingReplaced(null);
-        }
-      } else {
-        // Return blocks to their original position
-        const temp = currentBlocks[blockBeingReplacedId];
-        currentBlocks[blockBeingReplacedId] =
-          currentBlocks[blockBeingDraggedId];
+        } else {
+          // Return blocks to their original position
+          const temp = currentBlocks[blockBeingReplacedId];
+          currentBlocks[blockBeingReplacedId] =
+            currentBlocks[blockBeingDraggedId];
 
-        currentBlocks[blockBeingDraggedId] = temp;
-        setCurrentBlocks([...currentBlocks]);
+          currentBlocks[blockBeingDraggedId] = temp;
+          setCurrentBlocks([...currentBlocks]);
+        }
       }
     }
   };

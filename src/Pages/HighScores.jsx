@@ -72,7 +72,7 @@ const HighScores = () => {
 export default HighScores;
 
 const HighScorePage = styled.div`
-  background: url(${back1}) no-repeat;
+  background: url(${back1}) no-repeat center;
   background-size: cover;
   background-attachment: fixed;
   padding: 0 30px;
@@ -81,8 +81,7 @@ const HighScorePage = styled.div`
 
 const Wrapper = styled.div`
   background: #ffffffe1;
-  width: 80vmin;
-  padding: 20px;
+  width: 60vw;
   text-align: center;
   height: 100vh;
   overflow-y: scroll;

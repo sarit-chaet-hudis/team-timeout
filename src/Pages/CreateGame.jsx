@@ -73,12 +73,11 @@ const CreateGame = () => {
       setUserMessage("");
 
       setURL(`https://team-timeout.netlify.app/play/${teamSettings.teamUid}`);
-    } catch (err) {
-      setUserMessage("sorry, failed to save team data.", err);
-    } finally {
       linkRef.current.scrollIntoView({
         behavior: "smooth",
       });
+    } catch (err) {
+      setUserMessage("sorry, failed to save team data.", err);
     }
   };
 
@@ -127,6 +126,7 @@ const CreateGame = () => {
           type="text"
           name="teamName"
           value={teamName}
+          required
           onChange={(e) => setTeamName(e.target.value)}
         ></input>
         <div>

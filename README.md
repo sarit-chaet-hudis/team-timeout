@@ -23,9 +23,10 @@ https://github.com/sarit-chaet-hudis/team-timeout-server
 
 ## Known issues and Todos
 
-- Each player should only appear once in highscore table
+- Bug when trying to create game with no team name
 - New game button doesn't reshuffle the blocks
 - Game mechanics (valid moves) doesn't consider boundaries
+- Does not work on most mobile devices yet
 
 ## Acknowledgements
 
